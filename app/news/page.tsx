@@ -133,7 +133,6 @@ export default function NewsPage() {
       <Header />
 
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold gradient-text mb-4">Tin tức & Cẩm nang</h1>
           <p className="text-white/70 max-w-2xl mx-auto">

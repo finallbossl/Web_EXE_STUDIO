@@ -1,6 +1,5 @@
 "use client"
-
-import { useState } from "react"
+import { use, useEffect, useState } from "react"
 import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -34,163 +33,187 @@ import Link from "next/link"
 import { format, isBefore } from "date-fns"
 import { vi } from "date-fns/locale"
 
-export default function MakeupArtistDetailPage({ params }: { params: { id: string } }) {
+export default function MakeupArtistDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  const [makeupData, setMakeupData] = useState<any>(null)
   const [selectedDate, setSelectedDate] = useState<Date>()
+   
 
-  // Mock data cho makeup artist
-  const makeupData = {
-    id: params.id,
-    name: "Makeup Artist Linh",
-    tagline: "Chuyên gia trang điểm cô dâu hàng đầu",
-    rating: 4.8,
-    reviewCount: 89,
-    completedProjects: 450,
-    yearsExperience: 6,
-    location: "456 Lê Lợi, Quận 3, TP.HCM",
-    phone: "0907654321",
-    email: "contact@makeuplinh.com",
-    website: "https://makeuplinh.com",
-    socialMedia: {
-      instagram: "@makeup_linh",
-      facebook: "MakeupArtistLinh",
-    },
-    coverImage: "/placeholder.svg?height=400&width=800",
-    profileImage: "/placeholder.svg?height=200&width=200",
-    verified: true,
-    premium: true,
-    description: `Makeup Artist Linh với hơn 6 năm kinh nghiệm trong ngành làm đẹp, chuyên về makeup cưới và makeup dự tiệc. 
+  useEffect(() => {
+
+    const data = {
+      id,
+      name: "Makeup Artist Linh",
+      tagline: "Chuyên gia trang điểm cô dâu hàng đầu",
+      rating: 4.8,
+      reviewCount: 89,
+      completedProjects: 450,
+      yearsExperience: 6,
+      location: "456 Lê Lợi, Quận 3, TP.HCM",
+      phone: "0907654321",
+      email: "contact@makeuplinh.com",
+      website: "https://makeuplinh.com",
+      socialMedia: {
+        instagram: "@makeup_linh",
+        facebook: "MakeupArtistLinh",
+      },
+      coverImage: "/placeholder.svg?height=400&width=800",
+      profileImage: "/placeholder.svg?height=200&width=200",
+      verified: true,
+      premium: true,
+      description: `Makeup Artist Linh với hơn 6 năm kinh nghiệm trong ngành làm đẹp, chuyên về makeup cưới và makeup dự tiệc. 
     Tôi luôn theo đuổi phong cách trang điểm tự nhiên, tôn lên vẻ đẹp riêng của từng khách hàng.
     
     Đã thực hiện hơn 450 dự án thành công với sự hài lòng tuyệt đối từ khách hàng. Tôi cam kết mang đến cho bạn 
     vẻ đẹp hoàn hảo nhất trong ngày trọng đại.`,
 
-    services: [
-      {
-        id: "1",
-        name: "Makeup cô dâu cơ bản",
-        price: 800000,
-        duration: 90,
-        description: "Makeup cô dâu tự nhiên, tươi tắn cho ngày cưới",
-        includes: ["Makeup mặt", "Làm tóc cơ bản", "Cài phụ kiện", "Touch-up 1 lần"],
-        popular: false,
-      },
-      {
-        id: "2",
-        name: "Makeup cô dâu cao cấp",
-        price: 1500000,
-        duration: 120,
-        description: "Makeup cô dâu sang trọng với phong cách hiện đại",
-        includes: [
-          "Makeup mặt chuyên nghiệp",
-          "Làm tóc cao cấp",
-          "Cài phụ kiện",
-          "Touch-up 2 lần",
-          "Makeup phù dâu (1 người)",
-          "Tặng son touch-up",
-        ],
-        popular: true,
-      },
-      {
-        id: "3",
-        name: "Makeup dự tiệc",
-        price: 600000,
-        duration: 60,
-        description: "Makeup dự tiệc sang trọng, phù hợp mọi sự kiện",
-        includes: ["Makeup mặt", "Làm tóc đơn giản", "Touch-up 1 lần"],
-        popular: false,
-      },
-      {
-        id: "4",
-        name: "Makeup chụp ảnh",
-        price: 700000,
-        duration: 75,
-        description: "Makeup chuyên dụng cho chụp ảnh, bền màu",
-        includes: ["Makeup mặt HD", "Làm tóc", "Phù hợp ánh sáng studio"],
-        popular: false,
-      },
-    ],
+      services: [
+        {
+          id: "1",
+          name: "Makeup cô dâu cơ bản",
+          price: 800000,
+          duration: 90,
+          description: "Makeup cô dâu tự nhiên, tươi tắn cho ngày cưới",
+          includes: ["Makeup mặt", "Làm tóc cơ bản", "Cài phụ kiện", "Touch-up 1 lần"],
+          popular: false,
+        },
+        {
+          id: "2",
+          name: "Makeup cô dâu cao cấp",
+          price: 1500000,
+          duration: 120,
+          description: "Makeup cô dâu sang trọng với phong cách hiện đại",
+          includes: [
+            "Makeup mặt chuyên nghiệp",
+            "Làm tóc cao cấp",
+            "Cài phụ kiện",
+            "Touch-up 2 lần",
+            "Makeup phù dâu (1 người)",
+            "Tặng son touch-up",
+          ],
+          popular: true,
+        },
+        {
+          id: "3",
+          name: "Makeup dự tiệc",
+          price: 600000,
+          duration: 60,
+          description: "Makeup dự tiệc sang trọng, phù hợp mọi sự kiện",
+          includes: ["Makeup mặt", "Làm tóc đơn giản", "Touch-up 1 lần"],
+          popular: false,
+        },
+        {
+          id: "4",
+          name: "Makeup chụp ảnh",
+          price: 700000,
+          duration: 75,
+          description: "Makeup chuyên dụng cho chụp ảnh, bền màu",
+          includes: ["Makeup mặt HD", "Làm tóc", "Phù hợp ánh sáng studio"],
+          popular: false,
+        },
+      ],
 
-    specialties: [
-      "Makeup cưới",
-      "Makeup dự tiệc",
-      "Makeup chụp ảnh",
-      "Makeup sự kiện",
-      "Makeup nghệ thuật",
-      "Làm tóc cô dâu",
-    ],
+      specialties: [
+        "Makeup cưới",
+        "Makeup dự tiệc",
+        "Makeup chụp ảnh",
+        "Makeup sự kiện",
+        "Makeup nghệ thuật",
+        "Làm tóc cô dâu",
+      ],
 
-    certifications: [
-      "Chứng chỉ Makeup Artist quốc tế",
-      "Chứng chỉ Làm tóc chuyên nghiệp",
-      "Đào tạo tại Học viện Thẩm mỹ Hàn Quốc",
-      "Chứng nhận vệ sinh an toàn thực phẩm",
-    ],
+      certifications: [
+        "Chứng chỉ Makeup Artist quốc tế",
+        "Chứng chỉ Làm tóc chuyên nghiệp",
+        "Đào tạo tại Học viện Thẩm mỹ Hàn Quốc",
+        "Chứng nhận vệ sinh an toàn thực phẩm",
+      ],
 
-    brands: ["MAC", "NARS", "Urban Decay", "Charlotte Tilbury", "Dior", "YSL", "Chanel"],
+      brands: ["MAC", "NARS", "Urban Decay", "Charlotte Tilbury", "Dior", "YSL", "Chanel"],
 
-    workingHours: {
-      monday: { open: "09:00", close: "18:00", available: true },
-      tuesday: { open: "09:00", close: "18:00", available: true },
-      wednesday: { open: "09:00", close: "18:00", available: true },
-      thursday: { open: "09:00", close: "18:00", available: true },
-      friday: { open: "09:00", close: "18:00", available: true },
-      saturday: { open: "08:00", close: "20:00", available: true },
-      sunday: { open: "08:00", close: "20:00", available: true },
-    },
-
-    bookedSlots: [
-      {
-        date: "2024-01-25",
-        timeSlots: ["09:00-10:30", "14:00-16:00"],
-        services: ["Makeup cô dâu cao cấp", "Makeup dự tiệc"],
-        status: "confirmed",
+      workingHours: {
+        monday: { open: "09:00", close: "18:00", available: true },
+        tuesday: { open: "09:00", close: "18:00", available: true },
+        wednesday: { open: "09:00", close: "18:00", available: true },
+        thursday: { open: "09:00", close: "18:00", available: true },
+        friday: { open: "09:00", close: "18:00", available: true },
+        saturday: { open: "08:00", close: "20:00", available: true },
+        sunday: { open: "08:00", close: "20:00", available: true },
       },
-      {
-        date: "2024-01-26",
-        timeSlots: ["10:00-12:00"],
-        services: ["Makeup cô dâu cao cấp"],
-        status: "confirmed",
-      },
-      {
-        date: "2024-01-27",
-        timeSlots: ["09:00-10:30"],
-        services: ["Makeup dự tiệc"],
-        status: "pending",
-      },
-    ],
 
-    gallery: [
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-    ],
+      bookedSlots: [
+        {
+          date: "2024-01-25",
+          timeSlots: ["09:00-10:30", "14:00-16:00"],
+          services: ["Makeup cô dâu cao cấp", "Makeup dự tiệc"],
+          status: "confirmed",
+        },
+        {
+          date: "2024-01-26",
+          timeSlots: ["10:00-12:00"],
+          services: ["Makeup cô dâu cao cấp"],
+          status: "confirmed",
+        },
+        {
+          date: "2024-01-27",
+          timeSlots: ["09:00-10:30"],
+          services: ["Makeup dự tiệc"],
+          status: "pending",
+        },
+      ],
 
-    reviews: [
-      {
-        id: "1",
-        customerName: "Nguyễn Thị Mai",
-        rating: 5,
-        date: "2024-01-15",
-        comment: "Makeup rất đẹp và tự nhiên, Linh rất chuyên nghiệp và tận tâm!",
-        avatar: "/placeholder.svg?height=40&width=40",
-        service: "Makeup cô dâu cao cấp",
-        verified: true,
-      },
-      {
-        id: "2",
-        customerName: "Trần Thị Hoa",
-        rating: 5,
-        date: "2024-01-10",
-        comment: "Makeup bền màu cả ngày, rất hài lòng với dịch vụ.",
-        avatar: "/placeholder.svg?height=40&width=40",
-        service: "Makeup dự tiệc",
-        verified: true,
-      },
-    ],
+      gallery: [
+        "/placeholder.svg?height=300&width=400",
+        "/placeholder.svg?height=300&width=400",
+        "/placeholder.svg?height=300&width=400",
+        "/placeholder.svg?height=300&width=400",
+        "/placeholder.svg?height=300&width=400",
+        "/placeholder.svg?height=300&width=400",
+      ],
+
+      reviews: [
+        {
+          id: "1",
+          customerName: "Nguyễn Thị Mai",
+          rating: 5,
+          date: "2024-01-15",
+          comment: "Makeup rất đẹp và tự nhiên, Linh rất chuyên nghiệp và tận tâm!",
+          avatar: "/placeholder.svg?height=40&width=40",
+          service: "Makeup cô dâu cao cấp",
+          verified: true,
+        },
+        {
+          id: "2",
+          customerName: "Trần Thị Hoa",
+          rating: 5,
+          date: "2024-01-10",
+          comment: "Makeup bền màu cả ngày, rất hài lòng với dịch vụ.",
+          avatar: "/placeholder.svg?height=40&width=40",
+          service: "Makeup dự tiệc",
+          verified: true,
+        },
+      ],
+    }
+    setMakeupData(data)
+  }, [id])
+
+  if (!makeupData) {
+    return <div className="p-4">Đang tải dữ liệu...</div>
   }
+
+  const workingHours = makeupData.workingHours as Record<
+    string,
+    { open: string; close: string; available: boolean }
+  >;
+  const dayLabels: Record<string, string> = {
+    monday: "Thứ 2",
+    tuesday: "Thứ 3",
+    wednesday: "Thứ 4",
+    thursday: "Thứ 5",
+    friday: "Thứ 6",
+    saturday: "Thứ 7",
+    sunday: "Chủ nhật",
+  };
 
   const generateTimeSlots = (date: Date) => {
     const dayName = format(date, "EEEE", { locale: vi }).toLowerCase()
@@ -213,15 +236,22 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
 
   const isSlotAvailable = (date: Date, timeSlot: string) => {
     const dateString = format(date, "yyyy-MM-dd")
-    const bookedDay = makeupData.bookedSlots.find((slot) => slot.date === dateString)
+    const bookedDay = makeupData.bookedSlots.find(
+      (slot: { date: string; timeSlots: string[]; status: string }) =>
+        slot.date === dateString
+    )
 
     if (!bookedDay) return true
     return !bookedDay.timeSlots.includes(timeSlot)
   }
 
+
   const getDayStatus = (date: Date) => {
     const dateString = format(date, "yyyy-MM-dd")
-    const bookedDay = makeupData.bookedSlots.find((slot) => slot.date === dateString)
+    const bookedDay = makeupData.bookedSlots.find(
+      (slot: { date: string; timeSlots: string[]; status: string }) =>
+        slot.date === dateString
+    )
 
     if (!bookedDay) return "available"
 
@@ -363,7 +393,7 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
                           Chứng chỉ & Đào tạo
                         </h4>
                         <ul className="space-y-2">
-                          {makeupData.certifications.map((cert, index) => (
+                          {makeupData.certifications.map((cert: string, index: number) => (
                             <li key={index} className="flex items-center gap-2 text-sm">
                               <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
                               {cert}
@@ -378,7 +408,7 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
                           Chuyên môn
                         </h4>
                         <div className="flex flex-wrap gap-2">
-                          {makeupData.specialties.map((specialty, index) => (
+                          {makeupData.specialties.map((specialty: string, index: number) => (
                             <Badge key={index} variant="outline" className="text-xs">
                               {specialty}
                             </Badge>
@@ -390,7 +420,7 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
                     <div>
                       <h4 className="font-semibold mb-3">Thương hiệu sử dụng</h4>
                       <div className="flex flex-wrap gap-2">
-                        {makeupData.brands.map((brand, index) => (
+                        {makeupData.brands.map((brand: string, index: number) => (
                           <Badge key={index} className="bg-pink-100 text-pink-800 hover:bg-pink-200">
                             {brand}
                           </Badge>
@@ -401,24 +431,16 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
                     <div>
                       <h4 className="font-semibold mb-3">Giờ làm việc</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {Object.entries(makeupData.workingHours).map(([day, hours]) => (
-                          <div key={day} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                            <span className="font-medium capitalize">
-                              {day === "monday"
-                                ? "Thứ 2"
-                                : day === "tuesday"
-                                  ? "Thứ 3"
-                                  : day === "wednesday"
-                                    ? "Thứ 4"
-                                    : day === "thursday"
-                                      ? "Thứ 5"
-                                      : day === "friday"
-                                        ? "Thứ 6"
-                                        : day === "saturday"
-                                          ? "Thứ 7"
-                                          : "Chủ nhật"}
-                            </span>
-                            <span className={`text-sm ${hours.available ? "text-green-600" : "text-red-600"}`}>
+                        {Object.entries(workingHours).map(([day, hours]) => (
+                          <div
+                            key={day}
+                            className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
+                          >
+                            <span className="font-medium capitalize">{dayLabels[day]}</span>
+                            <span
+                              className={`text-sm ${hours.available ? "text-green-600" : "text-red-600"
+                                }`}
+                            >
                               {hours.available ? `${hours.open} - ${hours.close}` : "Nghỉ"}
                             </span>
                           </div>
@@ -431,7 +453,15 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
 
               {/* Services Tab */}
               <TabsContent value="services" className="space-y-4">
-                {makeupData.services.map((service) => (
+                {makeupData.services.map((service: {
+                  id: string;
+                  name: string;
+                  price: number;
+                  duration: number;
+                  description: string;
+                  includes: string[];
+                  popular: boolean;
+                }) => (
                   <Card key={service.id} className={service.popular ? "border-pink-500 border-2" : ""}>
                     <CardContent className="p-6">
                       <div className="flex justify-between items-start mb-4">
@@ -462,7 +492,7 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
                       <div>
                         <h4 className="font-medium mb-2">Bao gồm:</h4>
                         <ul className="grid grid-cols-1 md:grid-cols-2 gap-1">
-                          {service.includes.map((item, index) => (
+                          {service.includes?.map((item: string, index: number) => (
                             <li key={index} className="flex items-center gap-2 text-sm">
                               <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
                               {item}
@@ -470,6 +500,7 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
                           ))}
                         </ul>
                       </div>
+
                     </CardContent>
                   </Card>
                 ))}
@@ -539,11 +570,10 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
                                   return (
                                     <div
                                       key={slot}
-                                      className={`p-3 rounded-lg border-2 transition-colors ${
-                                        isAvailable
+                                      className={`p-3 rounded-lg border-2 transition-colors ${isAvailable
                                           ? "border-green-200 bg-green-50 hover:border-green-300"
                                           : "border-red-200 bg-red-50"
-                                      }`}
+                                        }`}
                                     >
                                       <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
@@ -567,10 +597,13 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
                                       {!isAvailable && (
                                         <div className="mt-2 text-sm text-gray-600">
                                           <span className="font-medium">Dịch vụ: </span>
-                                          {makeupData.bookedSlots
-                                            .find((booking) => booking.date === format(selectedDate, "yyyy-MM-dd"))
-                                            ?.services.join(", ")}
+                                          {selectedDate && (
+                                            makeupData.bookedSlots
+                                              .find((booking: { date: string; services: string[] }) => booking.date === format(selectedDate, "yyyy-MM-dd"))
+                                              ?.services.join(", ") || "Không có"
+                                          )}
                                         </div>
+
                                       )}
                                     </div>
                                   )
@@ -598,7 +631,7 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
               {/* Gallery Tab */}
               <TabsContent value="gallery">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {makeupData.gallery.map((image, index) => (
+                  {makeupData.gallery.map((image: string, index: number) => (
                     <div key={index} className="relative aspect-square group cursor-pointer">
                       <Image
                         src={image || "/placeholder.svg"}
@@ -610,11 +643,21 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
                     </div>
                   ))}
                 </div>
+
               </TabsContent>
 
               {/* Reviews Tab */}
               <TabsContent value="reviews" className="space-y-4">
-                {makeupData.reviews.map((review) => (
+                {makeupData.reviews.map((review: {
+                  id: string
+                  customerName: string
+                  rating: number
+                  date: string
+                  comment: string
+                  avatar: string
+                  service: string
+                  verified: boolean
+                }) => (
                   <Card key={review.id}>
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
@@ -633,13 +676,13 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
                                 </Badge>
                               )}
                             </div>
-                            <span className="text-sm text-gray-500">{format(new Date(review.date), "dd/MM/yyyy")}</span>
+                            <span className="text-sm text-gray-500">
+                              {format(new Date(review.date), "dd/MM/yyyy")}
+                            </span>
                           </div>
                           <div className="flex items-center gap-2 mb-2">
                             <div className="flex items-center gap-1">{renderStars(review.rating)}</div>
-                            <Badge variant="secondary" className="text-xs">
-                              {review.service}
-                            </Badge>
+                            <Badge variant="secondary" className="text-xs">{review.service}</Badge>
                           </div>
                           <p className="text-gray-700">{review.comment}</p>
                         </div>
@@ -647,6 +690,7 @@ export default function MakeupArtistDetailPage({ params }: { params: { id: strin
                     </CardContent>
                   </Card>
                 ))}
+
               </TabsContent>
             </Tabs>
           </div>
