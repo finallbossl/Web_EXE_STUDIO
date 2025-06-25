@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import {  use, useEffect, useState } from "react"
 import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -30,20 +30,23 @@ import {
 import Image from "next/image"
 import Link from "next/link"
 import { format } from "date-fns"
+import { promises } from "dns"
 
-export default function RentalDetailPage({ params }: { params: { id: string } }) {
+export default function RentalDetailPage({ params }: { params: Promise<{ id: string }> })  {
+  const { id } = use(params)
   const [selectedDate, setSelectedDate] = useState<Date>()
-
-  // Mock data cho rental shop
-  const rentalData = {
-    id: params.id,
+  const [rentalData, setRentalData] = useState<any>(null)
+  // Mock data cho rental shop\
+    useEffect(() => {
+  const data = {
+    id,
     name: "Thuê Áo Cưới Hoàng Gia",
     tagline: "Cửa hàng cho thuê trang phục cưới cao cấp",
     rating: 4.7,
     reviewCount: 156,
     totalItems: 500,
     yearsExperience: 8,
-    location: "789 Võ Văn Tần, Quận 7, TP.HCM",
+    location: "Nguyễn Thái Học,TP Quy Nhơn",
     phone: "0909876543",
     email: "contact@hoanggia.com",
     website: "https://hoanggia.com",
@@ -51,8 +54,8 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
       instagram: "@hoanggia_rental",
       facebook: "HoangGiaRental",
     },
-    coverImage: "/placeholder.svg?height=400&width=800",
-    profileImage: "/placeholder.svg?height=200&width=200",
+    coverImage: "/thuedo1.png?height=400&width=800",
+    profileImage: "/thuedo2.png?height=200&width=200",
     verified: true,
     premium: true,
     description: `Thuê Áo Cưới Hoàng Gia được thành lập từ năm 2016 với sứ mệnh mang đến những bộ trang phục cưới đẹp nhất cho các cặp đôi. 
@@ -143,12 +146,12 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
     ],
 
     gallery: [
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
+      "/thuedo1.png?height=300&width=400",
+      "/thuedo1.png?height=300&width=400",
+      "/thuedo1.png?height=300&width=400",
+      "/thuedo1.png?height=300&width=400",
+      "/thuedo1.png?height=300&width=400",
+      "/thuedo1.png?height=300&width=400",
     ],
 
     reviews: [
@@ -158,7 +161,7 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
         rating: 5,
         date: "2024-01-15",
         comment: "Áo cưới rất đẹp, dịch vụ tư vấn tận tình. Rất hài lòng!",
-        avatar: "/placeholder.svg?height=40&width=40",
+        avatar: "/thuedo1.png?height=40&width=40",
         category: "Áo cưới",
         verified: true,
       },
@@ -168,7 +171,7 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
         rating: 4,
         date: "2024-01-10",
         comment: "Vest đẹp, giá cả hợp lý. Sẽ quay lại lần sau.",
-        avatar: "/placeholder.svg?height=40&width=40",
+        avatar: "/thuedo1.png?height=40&width=40",
         category: "Vest nam",
         verified: true,
       },
@@ -194,6 +197,26 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
       ],
     },
   }
+  setRentalData(data)
+  }, [id])
+
+  if (!rentalData) {
+    return <div className="p-4">Đang tải dữ liệu...</div>
+  }
+
+  const workingHours = rentalData.workingHours as Record<
+    string,
+    { open: string; close: string; available: boolean }
+  >;
+  const dayLabels: Record<string, string> = {
+    monday: "Thứ 2",
+    tuesday: "Thứ 3",
+    wednesday: "Thứ 4",
+    thursday: "Thứ 5",
+    friday: "Thứ 6",
+    saturday: "Thứ 7",
+    sunday: "Chủ nhật",
+  };
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -322,7 +345,7 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
                           Dịch vụ cung cấp
                         </h4>
                         <ul className="space-y-2">
-                          {rentalData.services.map((service, index) => (
+                          {rentalData.services.map((service:string, index: number) => (
                             <li key={index} className="flex items-center gap-2 text-sm">
                               <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
                               {service}
@@ -337,7 +360,7 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
                           Đặc điểm nổi bật
                         </h4>
                         <ul className="space-y-2">
-                          {rentalData.features.map((feature, index) => (
+                          {rentalData.features.map((feature: string, index: number) => (
                             <li key={index} className="flex items-center gap-2 text-sm">
                               <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
                               {feature}
@@ -350,7 +373,7 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
                     <div>
                       <h4 className="font-semibold mb-3">Thương hiệu hợp tác</h4>
                       <div className="flex flex-wrap gap-2">
-                        {rentalData.brands.map((brand, index) => (
+                        {rentalData.brands.map((brand:string , index:number) => (
                           <Badge key={index} className="bg-purple-100 text-purple-800 hover:bg-purple-200">
                             {brand}
                           </Badge>
@@ -361,24 +384,13 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
                     <div>
                       <h4 className="font-semibold mb-3">Giờ làm việc</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {Object.entries(rentalData.workingHours).map(([day, hours]) => (
+                        {Object.entries(workingHours).map(([day, hours]) => (
                           <div key={day} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                            <span className="font-medium capitalize">
-                              {day === "monday"
-                                ? "Thứ 2"
-                                : day === "tuesday"
-                                  ? "Thứ 3"
-                                  : day === "wednesday"
-                                    ? "Thứ 4"
-                                    : day === "thursday"
-                                      ? "Thứ 5"
-                                      : day === "friday"
-                                        ? "Thứ 6"
-                                        : day === "saturday"
-                                          ? "Thứ 7"
-                                          : "Chủ nhật"}
-                            </span>
-                            <span className={`text-sm ${hours.available ? "text-green-600" : "text-red-600"}`}>
+                            <span className="font-medium capitalize">{dayLabels[day]}</span>
+                            <span
+                              className={`text-sm ${hours.available ? "text-green-600" : "text-red-600"
+                                }`}
+                            >
                               {hours.available ? `${hours.open} - ${hours.close}` : "Nghỉ"}
                             </span>
                           </div>
@@ -391,7 +403,16 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
 
               {/* Categories Tab */}
               <TabsContent value="categories" className="space-y-4">
-                {rentalData.categories.map((category) => (
+                {rentalData.categories.map((category:{
+                  id :string
+                  popular :string
+                  name :string 
+                  description: string 
+                  itemCount : number
+                  priceRange : [string, string]
+
+
+                }) => (
                   <Card key={category.id} className={category.popular ? "border-purple-500 border-2" : ""}>
                     <CardContent className="p-6">
                       <div className="flex justify-between items-start mb-4">
@@ -446,7 +467,7 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
               {/* Gallery Tab */}
               <TabsContent value="gallery">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {rentalData.gallery.map((image, index) => (
+                  {rentalData.gallery.map((image: string , index: number) => (
                     <div key={index} className="relative aspect-square group cursor-pointer">
                       <Image
                         src={image || "/placeholder.svg"}
@@ -462,7 +483,17 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
 
               {/* Reviews Tab */}
               <TabsContent value="reviews" className="space-y-4">
-                {rentalData.reviews.map((review) => (
+                {rentalData.reviews.map((review :{
+                                   id: string
+                                   avatar: string
+                                   customerName :string
+                                   verified :string
+                                   category :string
+                                   comment :string
+                                   date: string
+                                   rating: number
+                }      
+                ) => (
                   <Card key={review.id}>
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
@@ -509,7 +540,7 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
                     </CardHeader>
                     <CardContent>
                       <ul className="space-y-2">
-                        {rentalData.policies.rental.map((policy, index) => (
+                        {rentalData.policies.rental.map((policy:string , index:number) => (
                           <li key={index} className="flex items-start gap-2 text-sm">
                             <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
                             {policy}
@@ -528,7 +559,7 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
                     </CardHeader>
                     <CardContent>
                       <ul className="space-y-2">
-                        {rentalData.policies.return.map((policy, index) => (
+                        {rentalData.policies.return.map((policy:string, index:number) => (
                           <li key={index} className="flex items-start gap-2 text-sm">
                             <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
                             {policy}
@@ -547,7 +578,7 @@ export default function RentalDetailPage({ params }: { params: { id: string } })
                     </CardHeader>
                     <CardContent>
                       <ul className="space-y-2">
-                        {rentalData.policies.cancellation.map((policy, index) => (
+                        {rentalData.policies.cancellation.map((policy: string, index: number) => (
                           <li key={index} className="flex items-start gap-2 text-sm">
                             <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
                             {policy}

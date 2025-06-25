@@ -49,7 +49,7 @@ export default function MakeupArtistDetailPage({ params }: { params: Promise<{ i
       reviewCount: 89,
       completedProjects: 450,
       yearsExperience: 6,
-      location: "456 Lê Lợi, Quận 3, TP.HCM",
+      location: "Nguyễn Thái Học, TP Quy Nhơn",
       phone: "0907654321",
       email: "contact@makeuplinh.com",
       website: "https://makeuplinh.com",
@@ -57,8 +57,8 @@ export default function MakeupArtistDetailPage({ params }: { params: Promise<{ i
         instagram: "@makeup_linh",
         facebook: "MakeupArtistLinh",
       },
-      coverImage: "/placeholder.svg?height=400&width=800",
-      profileImage: "/placeholder.svg?height=200&width=200",
+      coverImage: "/makeup1.png?height=400&width=800",
+      profileImage: "/makeup1.png?height=200&width=200",
       verified: true,
       premium: true,
       description: `Makeup Artist Linh với hơn 6 năm kinh nghiệm trong ngành làm đẹp, chuyên về makeup cưới và makeup dự tiệc. 
@@ -163,12 +163,12 @@ export default function MakeupArtistDetailPage({ params }: { params: Promise<{ i
       ],
 
       gallery: [
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
+        "/makeup1.png?height=300&width=400",
+        "/makeup1.png?height=300&width=400",
+        "/makeup1.png?height=300&width=400",
+        "/makeup1.png?height=300&width=400",
+        "/makeup1.png?height=300&width=400",
+        "/makeup1.png?height=300&width=400",
       ],
 
       reviews: [

@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Camera, Palette, Shirt, ChevronDown, Bell, User, Settings, LogOut, Heart, Calendar } from "lucide-react"
-
+import Image from "next/image"
 export function Header() {
   const { user, logout } = useAuth()
 
@@ -16,11 +16,15 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-button rounded-lg flex items-center justify-center">
-              <Camera className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold gradient-text">BookingHub</span>
-          </Link>
+  <Image
+    src="/logo.png"
+    alt="BookingHub Logo"
+    width={84}
+    height={84}
+    className="rounded-lg"
+  />
+  <span className="text-xl font-bold gradient-text">DepStudio.vn</span>
+</Link>
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8">

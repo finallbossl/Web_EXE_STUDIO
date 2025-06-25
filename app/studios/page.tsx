@@ -32,7 +32,7 @@ export default function StudiosPage() {
       location: "Quận 1, TP.HCM",
       district: "quan-1",
       priceFrom: 2000000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/studio1.png?height=200&width=300",
       verified: true,
       premium: true,
       services: ["Chụp ảnh cưới", "Chụp ảnh gia đình", "Chụp ảnh doanh nghiệp"],
@@ -50,7 +50,7 @@ export default function StudiosPage() {
       location: "Quận 3, TP.HCM",
       district: "quan-3",
       priceFrom: 1500000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/studio2.png?height=200&width=300",
       verified: true,
       premium: false,
       services: ["Chụp ảnh cưới", "Chụp ảnh thời trang"],
@@ -68,7 +68,7 @@ export default function StudiosPage() {
       location: "Quận 7, TP.HCM",
       district: "quan-7",
       priceFrom: 3000000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/studio3.png?height=200&width=300",
       verified: true,
       premium: true,
       services: ["Chụp ảnh cưới", "Chụp ảnh gia đình", "Chụp ảnh sản phẩm"],
@@ -81,12 +81,12 @@ export default function StudiosPage() {
   ]
 
   const districts = [
-    { id: "quan-1", name: "Quận 1" },
-    { id: "quan-3", name: "Quận 3" },
-    { id: "quan-7", name: "Quận 7" },
-    { id: "quan-10", name: "Quận 10" },
-    { id: "binh-thanh", name: "Bình Thạnh" },
-    { id: "phu-nhuan", name: "Phú Nhuận" },
+    { id: "quan-1", name: "Nguyễn Thái Học , TP Quy Nhơn" },
+    { id: "quan-3", name: "Nguyễn Thái Học , TP Quy Nhơn" },
+    { id: "quan-7", name: "Nguyễn Thái Học , TP Quy Nhơn" },
+    { id: "quan-10", name: "Nguyễn Thái Học , TP Quy Nhơn" },
+    { id: "binh-thanh", name: "Nguyễn Thái Học , TP Quy Nhơn" },
+    { id: "phu-nhuan", name: "Nguyễn Thái Học , TP Quy Nhơn" },
   ]
 
   const services = [
