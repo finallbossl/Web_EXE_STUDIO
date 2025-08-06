@@ -129,30 +129,29 @@ export default function NewsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-transparent">
+    <div className="min-h-screen bg-[#EFE7DA] text-[#6F5D4F]">
       <Header />
 
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold gradient-text mb-4">Tin tức & Cẩm nang</h1>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-[#6F5D4F] mb-4">Tin tức & Cẩm nang</h1>
+          <p className="text-[#6F5D4F]/70 max-w-2xl mx-auto">
             Cập nhật những xu hướng mới nhất và hướng dẫn hữu ích cho ngày trọng đại của bạn
           </p>
         </div>
 
         {/* Search and Filter */}
-        <div className="glass-card border-white/20 rounded-lg p-6 mb-8">
+        <div className="bg-white border border-[#C1B6A3]/40 rounded-lg p-6 mb-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="relative">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-white/50" />
+              <Search className="absolute left-3 top-3 h-4 w-4 text-[#B3907A]" />
               <Input
                 placeholder="Tìm kiếm bài viết..."
-                className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                className="pl-10 bg-[#EFE7DA] border border-[#C1B6A3]/40 text-[#6F5D4F] placeholder:text-[#6F5D4F]/50"
               />
             </div>
             <Select defaultValue="all">
-              <SelectTrigger className="bg-white/10 border-white/20 text-white">
+              <SelectTrigger className="bg-[#EFE7DA] border border-[#C1B6A3]/40 text-[#6F5D4F]">
                 <SelectValue placeholder="Danh mục" />
               </SelectTrigger>
               <SelectContent>
@@ -164,7 +163,7 @@ export default function NewsPage() {
               </SelectContent>
             </Select>
             <Select defaultValue="newest">
-              <SelectTrigger className="bg-white/10 border-white/20 text-white">
+              <SelectTrigger className="bg-[#EFE7DA] border border-[#C1B6A3]/40 text-[#6F5D4F]">
                 <SelectValue placeholder="Sắp xếp" />
               </SelectTrigger>
               <SelectContent>
@@ -175,7 +174,7 @@ export default function NewsPage() {
                 ))}
               </SelectContent>
             </Select>
-            <Button className="bg-gradient-to-r from-rose-500 via-purple-500 to-cyan-500 hover:opacity-90">
+            <Button className="bg-[#B3907A] text-white rounded-md">
               <Filter className="w-4 h-4 mr-2" />
               Lọc
             </Button>
@@ -183,7 +182,7 @@ export default function NewsPage() {
         </div>
 
         {/* Featured Article */}
-        <Card className="glass-card border-white/20 mb-12 overflow-hidden">
+        <Card className=" overflow-hidden rounded-xl bg-white border border-[#C1B6A3]/30 mb-12 ">
           <div className="md:flex">
             <div className="md:w-1/2">
               <Image
@@ -224,7 +223,7 @@ export default function NewsPage() {
                   <span className="text-white">{featuredNews.readTime} phút đọc</span>
                 </div>
               </div>
-              <Button className="bg-gradient-to-r from-rose-500 via-purple-500 to-cyan-500 hover:opacity-90" asChild>
+              <Button className="bg-[#B3907A] text-white rounded-md" asChild>
                 <Link href={`/news/${featuredNews.id}`}>Đọc tiếp</Link>
               </Button>
             </CardContent>
@@ -236,7 +235,7 @@ export default function NewsPage() {
           {newsArticles.map((article) => (
             <Card
               key={article.id}
-              className="overflow-hidden hover:shadow-lg transition-all duration-300 glass-card border-white/20 group"
+              className="overflow-hidden rounded-ml bg-white border border-[#C1B6A3]/30 rounded-xl overflow-hidden hover:shadow-md"
             >
               <div className="relative">
                 <Image
@@ -282,7 +281,7 @@ export default function NewsPage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    className="border border-[#B3907A] text-[#6F5D4F] hover:bg-[#EFE7DA]/70"
                     asChild
                   >
                     <Link href={`/news/${article.id}`}>Đọc thêm</Link>
@@ -295,21 +294,24 @@ export default function NewsPage() {
 
         {/* Load More */}
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+          <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="bg-[#EFE7DA] border-[#C1B6A3] text-[#6F5D4F] hover:bg-[#E1DACA]">
             Xem thêm bài viết
           </Button>
         </div>
 
         {/* Newsletter Signup */}
-        <div className="mt-16 glass-card border-white/20 rounded-lg p-8 text-center">
-          <h3 className="text-2xl font-bold gradient-text mb-4">Đăng ký nhận tin tức</h3>
-          <p className="text-white/70 mb-6">Nhận thông báo về các bài viết mới nhất qua email</p>
+        <div className="mt-16 rounded-lg p-8 text-center bg-[#EFE7DA] border border-[#C1B6A3]">
+          <h3 className="text-2xl font-bold text-[#6F5D4F] mb-4">Đăng ký nhận tin tức</h3>
+          <p className="text-[#6F5D4F]/80 mb-6">Nhận thông báo về các bài viết mới nhất qua email</p>
           <div className="max-w-md mx-auto flex gap-2">
             <Input
               placeholder="Nhập email của bạn"
-              className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+              className="bg-white border border-[#C1B6A3] text-[#6F5D4F] placeholder:text-[#C1B6A3] focus-visible:ring-0 focus-visible:border-[#B3907A]"
             />
-            <Button className="bg-gradient-to-r from-rose-500 via-purple-500 to-cyan-500 hover:opacity-90">
+            <Button className="bg-[#B3907A] text-white hover:bg-[#6F5D4F]">
               Đăng ký
             </Button>
           </div>

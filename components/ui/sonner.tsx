@@ -3,6 +3,15 @@
 import { useTheme } from "next-themes"
 import { Toaster as Sonner } from "sonner"
 
+const COLORS = {
+  background: "bg-[#EFE7DA]",
+  foreground: "text-[#6F5D4F]",
+  border: "border-[#C1B6A3]",
+  shadow: "shadow-lg",
+  muted: "bg-[#E1DACA] text-[#6F5D4F]",
+  primary: "bg-[#B3907A] text-white",
+}
+
 type ToasterProps = React.ComponentProps<typeof Sonner>
 
 const Toaster = ({ ...props }: ToasterProps) => {
@@ -14,13 +23,10 @@ const Toaster = ({ ...props }: ToasterProps) => {
       className="toaster group"
       toastOptions={{
         classNames: {
-          toast:
-            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
-          description: "group-[.toast]:text-muted-foreground",
-          actionButton:
-            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-          cancelButton:
-            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+          toast: `group toast ${COLORS.background} ${COLORS.foreground} ${COLORS.border} ${COLORS.shadow}`,
+          description: "group-[.toast]:text-[#6F5D4F]",
+          actionButton: `${COLORS.primary}`,
+          cancelButton: `${COLORS.muted}`,
         },
       }}
       {...props}

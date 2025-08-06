@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle, XCircle, AlertCircle, CalendarIcon, Clock } from "lucide-react"
 import { format, isBefore, addDays } from "date-fns"
 import { vi } from "date-fns/locale"
+import { cn } from "@/lib/utils"
 
 interface AvailabilityCheckerProps {
   providerId: string
@@ -144,165 +145,179 @@ export function AvailabilityChecker({
   const weekAvailability = getWeekAvailability()
 
   return (
-    <div className="space-y-6">
-      {/* Quick Week View */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CalendarIcon className="w-5 h-5" />
-            Tình trạng 7 ngày tới
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-7 gap-2">
-            {weekAvailability.map((day, index) => (
+  <div className="space-y-6">
+    {/* Quick Week View */}
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <CalendarIcon className="w-5 h-5" />
+          Tình trạng 7 ngày tới
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-7 gap-2">
+          {weekAvailability.map(({ date, dayName, dayNumber, availability }, index) => {
+            const isSelected =
+              selectedDate && format(selectedDate, "yyyy-MM-dd") === format(date, "yyyy-MM-dd")
+
+            return (
               <div
                 key={index}
-                className={`text-center p-3 rounded-lg border cursor-pointer transition-colors ${
-                  selectedDate && format(selectedDate, "yyyy-MM-dd") === format(day.date, "yyyy-MM-dd")
+                onClick={() => handleDateSelect(date)}
+                className={cn(
+                  "text-center p-3 rounded-lg border cursor-pointer transition-colors",
+                  isSelected
                     ? "border-blue-500 bg-blue-50"
                     : "border-gray-200 hover:border-gray-300"
-                }`}
-                onClick={() => handleDateSelect(day.date)}
+                )}
               >
-                <div className="text-xs text-gray-500 mb-1">{day.dayName}</div>
-                <div className="font-medium mb-2">{day.dayNumber}</div>
-                <Badge className={`text-xs ${day.availability.color}`}>{day.availability.label}</Badge>
+                <div className="text-xs text-muted-foreground mb-1">{dayName}</div>
+                <div className="font-medium mb-2">{dayNumber}</div>
+                <Badge className={cn("text-xs", availability.color)}>{availability.label}</Badge>
               </div>
-            ))}
+            )
+          })}
+        </div>
+      </CardContent>
+    </Card>
+
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Calendar */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Chọn ngày</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Calendar
+            mode="single"
+            selected={selectedDate}
+            onSelect={handleDateSelect}
+            disabled={(date) => isBefore(date, new Date())}
+            locale={vi}
+            className="rounded-md border"
+            modifiers={{
+              available: (date) => getDayAvailability(date).status === "available",
+              "partially-booked": (date) => getDayAvailability(date).status === "partially-booked",
+              "fully-booked": (date) => getDayAvailability(date).status === "fully-booked",
+              closed: (date) => getDayAvailability(date).status === "closed",
+            }}
+            modifiersStyles={{
+              available: { backgroundColor: "#dcfce7", color: "#166534" },
+              "partially-booked": { backgroundColor: "#fef3c7", color: "#92400e" },
+              "fully-booked": { backgroundColor: "#fecaca", color: "#991b1b" },
+              closed: { backgroundColor: "#f3f4f6", color: "#6b7280" },
+            }}
+          />
+
+          <div className="mt-4 space-y-2">
+            <h5 className="font-medium text-sm">Chú thích:</h5>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-green-200 rounded" />
+                <span>Còn trống</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-yellow-200 rounded" />
+                <span>Một phần đã đặt</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-red-200 rounded" />
+                <span>Đã đầy</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-gray-200 rounded" />
+                <span>Nghỉ</span>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Calendar */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Chọn ngày</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Calendar
-              mode="single"
-              selected={selectedDate}
-              onSelect={handleDateSelect}
-              disabled={(date) => isBefore(date, new Date())}
-              locale={vi}
-              className="rounded-md border"
-              modifiers={{
-                available: (date) => getDayAvailability(date).status === "available",
-                "partially-booked": (date) => getDayAvailability(date).status === "partially-booked",
-                "fully-booked": (date) => getDayAvailability(date).status === "fully-booked",
-                closed: (date) => getDayAvailability(date).status === "closed",
-              }}
-              modifiersStyles={{
-                available: { backgroundColor: "#dcfce7", color: "#166534" },
-                "partially-booked": { backgroundColor: "#fef3c7", color: "#92400e" },
-                "fully-booked": { backgroundColor: "#fecaca", color: "#991b1b" },
-                closed: { backgroundColor: "#f3f4f6", color: "#6b7280" },
-              }}
-            />
-
-            {/* Legend */}
-            <div className="mt-4 space-y-2">
-              <h5 className="font-medium text-sm">Chú thích:</h5>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-green-200 rounded"></div>
-                  <span>Còn trống</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-yellow-200 rounded"></div>
-                  <span>Một phần đã đặt</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-red-200 rounded"></div>
-                  <span>Đã đầy</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-gray-200 rounded"></div>
-                  <span>Nghỉ</span>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Time Slots */}
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              {selectedDate ? `Khung giờ - ${format(selectedDate, "dd/MM/yyyy", { locale: vi })}` : "Chọn khung giờ"}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {selectedDate ? (
+      {/* Time Slots */}
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            {selectedDate
+              ? `Khung giờ - ${format(selectedDate, "dd/MM/yyyy", { locale: vi })}`
+              : "Chọn khung giờ"}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {selectedDate ? (
+            timeSlots.length > 0 ? (
               <div className="space-y-3">
-                {timeSlots.length > 0 ? (
-                  timeSlots.map((slot) => {
-                    const isAvailable = isSlotAvailable(selectedDate, `${slot.startTime}-${slot.endTime}`)
-                    const isSelected = selectedTimeSlot === slot.id
-                    return (
-                      <Button
-                        key={slot.id}
-                        variant={isSelected ? "default" : "outline"}
-                        className={`w-full justify-between p-4 h-auto ${
-                          !isAvailable ? "opacity-50 cursor-not-allowed" : ""
-                        }`}
-                        onClick={() => isAvailable && handleTimeSlotSelect(slot.id)}
-                        disabled={!isAvailable}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center gap-2">
-                            {isAvailable ? (
-                              <CheckCircle className="w-5 h-5 text-green-600" />
-                            ) : (
-                              <XCircle className="w-5 h-5 text-red-600" />
-                            )}
-                            <span className="font-medium">{slot.time}</span>
-                          </div>
-                          <div className="flex items-center gap-1 text-sm text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>{slot.duration}h</span>
-                          </div>
+                {timeSlots.map((slot) => {
+                  const slotKey = `${slot.startTime}-${slot.endTime}`
+                  const isAvailable = isSlotAvailable(selectedDate, slotKey)
+                  const isSelected = selectedTimeSlot === slot.id
+
+                  return (
+                    <Button
+                      key={slot.id}
+                      variant={isSelected ? "default" : "outline"}
+                      className={cn(
+                        "w-full justify-between p-4 h-auto text-sm",
+                        !isAvailable && "opacity-50 cursor-not-allowed"
+                      )}
+                      onClick={() => isAvailable && handleTimeSlotSelect(slot.id)}
+                      disabled={!isAvailable}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
+                          {isAvailable ? (
+                            <CheckCircle className="w-5 h-5 text-green-600" />
+                          ) : (
+                            <XCircle className="w-5 h-5 text-red-600" />
+                          )}
+                          <span className="font-medium">{slot.time}</span>
                         </div>
-                        <Badge className={isAvailable ? "bg-green-600" : "bg-red-600"}>
-                          {isAvailable ? "Còn trống" : "Đã đặt"}
-                        </Badge>
-                      </Button>
-                    )
-                  })
-                ) : (
-                  <div className="text-center py-8 text-gray-500">
-                    <AlertCircle className="w-8 h-8 mx-auto mb-2" />
-                    <p>Không làm việc vào ngày này</p>
-                  </div>
-                )}
+                        <div className="flex items-center gap-1 text-muted-foreground">
+                          <Clock className="w-4 h-4" />
+                          <span>{slot.duration}h</span>
+                        </div>
+                      </div>
+                      <Badge className={isAvailable ? "bg-green-600" : "bg-red-600"}>
+                        {isAvailable ? "Còn trống" : "Đã đặt"}
+                      </Badge>
+                    </Button>
+                  )
+                })}
               </div>
             ) : (
-              <div className="text-center py-8 text-gray-500">
-                <CalendarIcon className="w-8 h-8 mx-auto mb-2" />
-                <p>Chọn ngày để xem khung giờ có sẵn</p>
+              <div className="text-center py-8 text-muted-foreground">
+                <AlertCircle className="w-8 h-8 mx-auto mb-2" />
+                <p>Không làm việc vào ngày này</p>
               </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Booking Summary */}
-      {selectedDate && selectedTimeSlot && (
-        <Card className="border-green-200 bg-green-50">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <CheckCircle className="w-5 h-5 text-green-600" />
-              <span className="font-medium text-green-800">Đã chọn thời gian</span>
+            )
+          ) : (
+            <div className="text-center py-8 text-muted-foreground">
+              <CalendarIcon className="w-8 h-8 mx-auto mb-2" />
+              <p>Chọn ngày để xem khung giờ có sẵn</p>
             </div>
-            <div className="text-sm text-green-700">
-              <div>Ngày: {format(selectedDate, "EEEE, dd/MM/yyyy", { locale: vi })}</div>
-              <div>Giờ: {timeSlots.find((slot) => slot.id === selectedTimeSlot)?.time}</div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+          )}
+        </CardContent>
+      </Card>
     </div>
-  )
+
+    {/* Booking Summary */}
+    {selectedDate && selectedTimeSlot && (
+      <Card className="border-green-200 bg-green-50">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <CheckCircle className="w-5 h-5 text-green-600" />
+            <span className="font-medium text-green-800">Đã chọn thời gian</span>
+          </div>
+          <div className="text-sm text-green-700">
+            <div>
+              Ngày: {format(selectedDate, "EEEE, dd/MM/yyyy", { locale: vi })}
+            </div>
+            <div>
+              Giờ: {timeSlots.find((slot) => slot.id === selectedTimeSlot)?.time}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    )}
+  </div>
+)
 }

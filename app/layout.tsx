@@ -7,9 +7,8 @@ import { AuthProvider } from "@/contexts/auth-context"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "BookingHub - Nền tảng đặt lịch dịch vụ",
+  title: "DepStudio - Nền tảng đặt lịch dịch vụ",
   description: "Kết nối bạn với những dịch vụ tốt nhất",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -21,6 +20,7 @@ export default function RootLayout({
     <html lang="vi">
       <body className={inter.className}>
         <AuthProvider>{children}</AuthProvider>
+        {/* {children} */}
       </body>
     </html>
   )

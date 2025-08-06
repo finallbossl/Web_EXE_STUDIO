@@ -45,7 +45,7 @@ export default function RentalPage() {
       location: "Quận 7, TP.HCM",
       district: "quan-7",
       priceFrom: 800000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/ee9ac0b5e6bd00e359ac-600x759-1.jpg?height=200&width=300",
       verified: true,
       premium: true,
       categories: ["Áo cưới", "Vest nam", "Áo dài"],
@@ -64,7 +64,7 @@ export default function RentalPage() {
       location: "Quận 1, TP.HCM",
       district: "quan-1",
       priceFrom: 600000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/vay-cuoi-cong-chua-hoang-gia-5.png?height=200&width=300",
       verified: true,
       premium: true,
       categories: ["Áo cưới", "Trang phục dự tiệc"],
@@ -83,7 +83,7 @@ export default function RentalPage() {
       location: "Quận 3, TP.HCM",
       district: "quan-3",
       priceFrom: 500000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/vay-cuoi-cong-chua-hoang-gia-1.png?height=200&width=300",
       verified: true,
       premium: false,
       categories: ["Áo cưới", "Vest nam"],
@@ -143,26 +143,28 @@ export default function RentalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#EFE7DA]">
       <Header />
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-12">
+      <div className="bg-[#F5F1EB] text-[#6F5D4F] text-center py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Thuê Trang Phục</h1>
           <p className="text-xl mb-6">Tìm kiếm cửa hàng cho thuê trang phục cưới và dự tiệc</p>
 
           {/* Search Bar */}
-          <div className="max-w-2xl bg-white rounded-lg p-2 flex items-center">
-            <Search className="w-5 h-5 text-gray-400 ml-3" />
-            <Input
-              placeholder="Tìm kiếm cửa hàng, loại trang phục..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="border-0 focus-visible:ring-0 text-gray-900"
-            />
-            <Button className="ml-2">Tìm kiếm</Button>
-          </div>
+          <div className="w-full flex justify-center">
+  <div className="w-[700px] bg-white border border-[#C1B6A3] rounded-lg p-2 flex items-center shadow-sm mx-auto">
+    <Search className="w-5 h-5 text-[#B3907A] ml-3" />
+    <Input
+      placeholder="Tìm kiếm cửa hàng, loại trang phục..."
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      className="border-0 focus-visible:ring-0 text-[#6F5D4F] placeholder:text-[#B3907A] bg-transparent"
+    />
+    <Button className="ml-2 bg-[#6F5D4F] text-white hover:bg-[#5d4c40]">Tìm kiếm</Button>
+  </div>
+</div>
         </div>
       </div>
 
@@ -389,13 +391,13 @@ export default function RentalPage() {
                       />
                       <div className="absolute top-2 left-2 flex gap-2">
                         {shop.verified && (
-                          <Badge className="bg-purple-600">
+                          <Badge className="bg-[#B3907A] text-white">
                             <Shield className="w-3 h-3 mr-1" />
                             Verified
                           </Badge>
                         )}
                         {shop.premium && (
-                          <Badge className="bg-gradient-to-r from-purple-400 to-indigo-500">Premium</Badge>
+                          <Badge className="bg-gradient-to-r from-[#C1B6A3] to-[#6F5D4F] text-white">Premium</Badge>
                         )}
                       </div>
                       <div className="absolute top-2 right-2">

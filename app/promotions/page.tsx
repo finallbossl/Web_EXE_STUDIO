@@ -136,30 +136,30 @@ export default function PromotionsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-transparent">
+    <div className="min-h-screen bg-[#EFE7DA] text-[#6F5D4F]">
       <Header />
 
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold gradient-text mb-4">Ưu đãi & Khuyến mãi</h1>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-[#6F5D4F] mb-4">Ưu đãi & Khuyến mãi</h1>
+          <p className="text-[#6F5D4F]/70 max-w-2xl mx-auto">
             Khám phá những ưu đãi hấp dẫn từ các nhà cung cấp dịch vụ hàng đầu
           </p>
         </div>
 
         {/* Search and Filter */}
-        <div className="glass-card border-white/20 rounded-lg p-6 mb-8">
+        <div className="bg-[#F5F1EB] border border-[#C1B6A3] rounded-lg p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="relative">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-white/50" />
+              <Search className="absolute left-3 top-3 h-4 w-4 text-[#6F5D4F]/50" />
               <Input
                 placeholder="Tìm kiếm ưu đãi..."
-                className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                className="pl-10 bg-[#EFE7DA] border border-[#C1B6A3] text-[#6F5D4F] placeholder:text-[#6F5D4F]/50"
               />
             </div>
             <Select defaultValue="all">
-              <SelectTrigger className="bg-white/10 border-white/20 text-white">
+              <SelectTrigger className="bg-[#EFE7DA] border border-[#C1B6A3] text-[#6F5D4F]">
                 <SelectValue placeholder="Danh mục" />
               </SelectTrigger>
               <SelectContent>
@@ -171,7 +171,7 @@ export default function PromotionsPage() {
               </SelectContent>
             </Select>
             <Select defaultValue="newest">
-              <SelectTrigger className="bg-white/10 border-white/20 text-white">
+              <SelectTrigger className="bg-[#EFE7DA] border border-[#C1B6A3] text-[#6F5D4F]">
                 <SelectValue placeholder="Sắp xếp" />
               </SelectTrigger>
               <SelectContent>
@@ -182,7 +182,7 @@ export default function PromotionsPage() {
                 ))}
               </SelectContent>
             </Select>
-            <Button className="bg-gradient-to-r from-rose-500 via-purple-500 to-cyan-500 hover:opacity-90">
+            <Button className="bg-[#6F5D4F] text-white hover:opacity-90">
               <Filter className="w-4 h-4 mr-2" />
               Lọc
             </Button>
@@ -194,7 +194,7 @@ export default function PromotionsPage() {
           {promotions.map((promo) => (
             <Card
               key={promo.id}
-              className="overflow-hidden hover:shadow-lg transition-all duration-300 glass-card border-white/20 group"
+              className="overflow-hidden border border-[#C1B6A3] bg-white transition-all duration-300 rounded-xl hover:shadow-xl hover:-translate-y-1"
             >
               <div className="relative">
                 <Image
@@ -228,23 +228,23 @@ export default function PromotionsPage() {
                   </Badge>
                 </div>
                 <div className="absolute bottom-2 right-2">
-                  <Badge className="bg-black/50 text-white">
+                  <Badge className="bg-[#6F5D4F]/30 text-white">
                     <Calendar className="w-3 h-3 mr-1" />
                     {getDaysLeft(promo.validUntil)} ngày
                   </Badge>
                 </div>
               </div>
 
-              <CardContent className="p-6">
+              <CardContent className="p-6 bg-white text-[#6F5D4F]">
                 <h3 className="text-xl font-semibold mb-2 text-white">{promo.title}</h3>
-                <p className="text-white/70 text-sm mb-4 line-clamp-2">{promo.description}</p>
+                <p className="text-[#6F5D4F]/70 text-sm mb-4 line-clamp-2">{promo.description}</p>
 
                 <div className="space-y-2 mb-4">
-                  <div className="flex items-center gap-2 text-sm text-white/70">
+                  <div className="flex items-center gap-2 text-sm text-[#6F5D4F]/70">
                     <MapPin className="w-4 h-4" />
                     <span className="text-white">{promo.provider}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-white/70">
+                  <div className="flex items-center gap-2 text-sm text-[#6F5D4F]/70">
                     <Star className="w-4 h-4" />
                     <span className="text-white">Đơn tối thiểu: {promo.minOrder.toLocaleString()}đ</span>
                   </div>
@@ -252,15 +252,15 @@ export default function PromotionsPage() {
 
                 {/* Usage Progress */}
                 <div className="mb-4">
-                  <div className="flex justify-between text-sm text-white/70 mb-1">
-                    <span className="text-white">Đã sử dụng</span>
-                    <span className="text-white">
+                  <div className="flex justify-between text-sm text-[#6F5D4F]/70 mb-1">
+                    <span >Đã sử dụng</span>
+                    <span >
                       {promo.used}/{promo.total}
                     </span>
                   </div>
-                  <div className="w-full bg-white/20 rounded-full h-2">
+                  <div className="w-full bg-[#EFE7DA] rounded-full h-2">
                     <div
-                      className="bg-gradient-to-r from-rose-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                      className="bg-[#B3907A] h-2 rounded-full transition-all duration-300"
                       style={{ width: `${(promo.used / promo.total) * 100}%` }}
                     ></div>
                   </div>
@@ -268,14 +268,14 @@ export default function PromotionsPage() {
 
                 <div className="flex items-center justify-between">
                   <div className="text-center">
-                    <div className="text-xs text-white/70">Mã giảm giá</div>
-                    <div className="font-mono font-bold text-white bg-white/10 px-2 py-1 rounded text-sm">
+                    <div className="text-xs text-[#6F5D4F]/70">Mã giảm giá</div>
+                    <div className="font-mono font-bold bg-[#EFE7DA] text-[#6F5D4F] px-2 py-1 rounded text-sm">
                       {promo.code}
                     </div>
                   </div>
                   <Button
                     size="sm"
-                    className="bg-gradient-to-r from-rose-500 via-purple-500 to-cyan-500 hover:opacity-90"
+                    className="bg-[#6F5D4F]/80 text-white hover:bg-[#5c4b3f]"
                   >
                     Sử dụng ngay
                   </Button>
@@ -287,21 +287,21 @@ export default function PromotionsPage() {
 
         {/* Load More */}
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+          <Button variant="outline" size="lg" className="bg-white text-[#6F5D4F] border-[#C1B6A3] hover:bg-[#F5F0E7]">
             Xem thêm ưu đãi
           </Button>
         </div>
 
         {/* Newsletter Signup */}
-        <div className="mt-16 glass-card border-white/20 rounded-lg p-8 text-center">
-          <h3 className="text-2xl font-bold gradient-text mb-4">Đăng ký nhận ưu đãi</h3>
-          <p className="text-white/70 mb-6">Nhận thông báo về các ưu đãi mới nhất qua email</p>
+        <div className="mt-16 border border-[#C1B6A3] rounded-lg p-8 text-center bg-white">
+          <h3 className="text-2xl font-bold mb-4 text-[#6F5D4F]">Đăng ký nhận ưu đãi</h3>
+          <p className="text-[#6F5D4F]/70 mb-6">Nhận thông báo về các ưu đãi mới nhất qua email</p>
           <div className="max-w-md mx-auto flex gap-2">
             <Input
               placeholder="Nhập email của bạn"
-              className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+              className="bg-[#EFE7DA] border border-[#C1B6A3] text-[#6F5D4F] placeholder:text-[#6F5D4F]/50"
             />
-            <Button className="bg-gradient-to-r from-rose-500 via-purple-500 to-cyan-500 hover:opacity-90">
+            <Button className="bg-[#B3907A] text-white hover:bg-[#6F5D4F]">
               Đăng ký
             </Button>
           </div>

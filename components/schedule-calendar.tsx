@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle, XCircle, AlertCircle, CalendarIcon } from "lucide-react"
 import { format, isBefore } from "date-fns"
 import { vi } from "date-fns/locale"
+import { cn } from "@/lib/utils"
 
 interface ScheduleCalendarProps {
   workingHours: Record<string, { open: string; close: string; available: boolean }>
@@ -21,66 +22,62 @@ interface ScheduleCalendarProps {
   onTimeSlotSelect?: (timeSlot: string) => void
 }
 
-export function ScheduleCalendar({ workingHours, bookedSlots, onDateSelect, onTimeSlotSelect }: ScheduleCalendarProps) {
+export function ScheduleCalendar({
+  workingHours,
+  bookedSlots,
+  onDateSelect,
+  onTimeSlotSelect,
+}: ScheduleCalendarProps) {
   const [selectedDate, setSelectedDate] = useState<Date>()
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("")
 
   const generateTimeSlots = (date: Date) => {
     const dayName = format(date, "EEEE", { locale: vi }).toLowerCase()
     const workingHour = workingHours[dayName]
-
     if (!workingHour?.available) return []
 
     const slots = []
-    const startHour = Number.parseInt(workingHour.open.split(":")[0])
-    const endHour = Number.parseInt(workingHour.close.split(":")[0])
+    const startHour = parseInt(workingHour.open.split(":")[0])
+    const endHour = parseInt(workingHour.close.split(":")[0])
 
     for (let hour = startHour; hour < endHour; hour += 2) {
       const startTime = `${hour.toString().padStart(2, "0")}:00`
       const endTime = `${(hour + 2).toString().padStart(2, "0")}:00`
       slots.push(`${startTime}-${endTime}`)
     }
-
     return slots
   }
 
   const isSlotAvailable = (date: Date, timeSlot: string) => {
     const dateString = format(date, "yyyy-MM-dd")
     const bookedDay = bookedSlots.find((slot) => slot.date === dateString)
-
-    if (!bookedDay) return true
-    return !bookedDay.timeSlots.includes(timeSlot)
+    return !bookedDay || !bookedDay.timeSlots.includes(timeSlot)
   }
 
   const getDayStatus = (date: Date) => {
     const dateString = format(date, "yyyy-MM-dd")
     const bookedDay = bookedSlots.find((slot) => slot.date === dateString)
-
-    if (!bookedDay) return "available"
-
     const dayName = format(date, "EEEE", { locale: vi }).toLowerCase()
     const workingHour = workingHours[dayName]
-    const totalSlots = generateTimeSlots(date).length
-    const bookedSlotsCount = bookedDay.timeSlots.length
+    if (!workingHour?.available) return "closed"
+    if (!bookedDay) return "available"
 
-    if (bookedSlotsCount >= totalSlots) return "fully-booked"
-    if (bookedSlotsCount > 0) return "partially-booked"
+    const totalSlots = generateTimeSlots(date).length
+    const bookedCount = bookedDay.timeSlots.length
+    if (bookedCount >= totalSlots) return "fully-booked"
+    if (bookedCount > 0) return "partially-booked"
     return "available"
   }
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date)
     setSelectedTimeSlot("")
-    if (date && onDateSelect) {
-      onDateSelect(date)
-    }
+    onDateSelect?.(date!)
   }
 
-  const handleTimeSlotSelect = (timeSlot: string) => {
-    setSelectedTimeSlot(timeSlot)
-    if (onTimeSlotSelect) {
-      onTimeSlotSelect(timeSlot)
-    }
+  const handleTimeSlotSelect = (slot: string) => {
+    setSelectedTimeSlot(slot)
+    onTimeSlotSelect?.(slot)
   }
 
   const timeSlots = selectedDate ? generateTimeSlots(selectedDate) : []
@@ -88,7 +85,7 @@ export function ScheduleCalendar({ workingHours, bookedSlots, onDateSelect, onTi
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Calendar */}
-      <Card>
+      <Card className="border bg-white rounded-lg shadow-sm">
         <CardHeader>
           <CardTitle>Chọn ngày</CardTitle>
         </CardHeader>
@@ -104,29 +101,35 @@ export function ScheduleCalendar({ workingHours, bookedSlots, onDateSelect, onTi
               available: (date) => getDayStatus(date) === "available",
               "partially-booked": (date) => getDayStatus(date) === "partially-booked",
               "fully-booked": (date) => getDayStatus(date) === "fully-booked",
+              closed: (date) => getDayStatus(date) === "closed",
             }}
             modifiersStyles={{
               available: { backgroundColor: "#dcfce7", color: "#166534" },
               "partially-booked": { backgroundColor: "#fef3c7", color: "#92400e" },
               "fully-booked": { backgroundColor: "#fecaca", color: "#991b1b" },
+              closed: { backgroundColor: "#f3f4f6", color: "#6b7280" },
             }}
           />
 
           {/* Legend */}
           <div className="mt-4 space-y-2">
             <h5 className="font-medium text-sm">Chú thích:</h5>
-            <div className="flex flex-wrap gap-4 text-xs">
+            <div className="grid grid-cols-2 gap-2 text-xs">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-200 rounded"></div>
+                <div className="w-3 h-3 bg-green-100 border border-green-500 rounded" />
                 <span>Còn trống</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-yellow-200 rounded"></div>
-                <span>Một phần đã đặt</span>
+                <div className="w-3 h-3 bg-yellow-100 border border-yellow-500 rounded" />
+                <span>Một phần</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-red-200 rounded"></div>
+                <div className="w-3 h-3 bg-red-100 border border-red-500 rounded" />
                 <span>Đã đầy</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-gray-100 border border-gray-400 rounded" />
+                <span>Nghỉ</span>
               </div>
             </div>
           </div>
@@ -134,10 +137,12 @@ export function ScheduleCalendar({ workingHours, bookedSlots, onDateSelect, onTi
       </Card>
 
       {/* Time Slots */}
-      <Card>
+      <Card className="border bg-white rounded-lg shadow-sm">
         <CardHeader>
           <CardTitle>
-            {selectedDate ? `Khung giờ - ${format(selectedDate, "dd/MM/yyyy", { locale: vi })}` : "Chọn khung giờ"}
+            {selectedDate
+              ? `Khung giờ - ${format(selectedDate, "dd/MM/yyyy", { locale: vi })}`
+              : "Chọn khung giờ"}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -151,23 +156,26 @@ export function ScheduleCalendar({ workingHours, bookedSlots, onDateSelect, onTi
                     <Button
                       key={slot}
                       variant={isSelected ? "default" : "outline"}
-                      className={`w-full justify-between p-4 h-auto ${
-                        !isAvailable ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
+                      className={cn(
+                        "w-full justify-between p-4 h-auto text-sm",
+                        isAvailable
+                          ? "text-black"
+                          : "opacity-50 cursor-not-allowed text-gray-500"
+                      )}
                       onClick={() => isAvailable && handleTimeSlotSelect(slot)}
                       disabled={!isAvailable}
                     >
                       <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-2">
-                          {isAvailable ? (
-                            <CheckCircle className="w-5 h-5 text-green-600" />
-                          ) : (
-                            <XCircle className="w-5 h-5 text-red-600" />
-                          )}
-                          <span className="font-medium">{slot}</span>
-                        </div>
+                        {isAvailable ? (
+                          <CheckCircle className="w-5 h-5 text-green-600" />
+                        ) : (
+                          <XCircle className="w-5 h-5 text-red-600" />
+                        )}
+                        <span className="font-medium">{slot}</span>
                       </div>
-                      <Badge className={isAvailable ? "bg-green-600" : "bg-red-600"}>
+                      <Badge
+                        className={isAvailable ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}
+                      >
                         {isAvailable ? "Còn trống" : "Đã đặt"}
                       </Badge>
                     </Button>
@@ -183,7 +191,7 @@ export function ScheduleCalendar({ workingHours, bookedSlots, onDateSelect, onTi
           ) : (
             <div className="text-center py-8 text-gray-500">
               <CalendarIcon className="w-8 h-8 mx-auto mb-2" />
-              <p>Chọn ngày để xem khung giờ có sẵn</p>
+              <p>Chọn ngày để xem khung giờ</p>
             </div>
           )}
         </CardContent>

@@ -16,12 +16,13 @@ interface User {
   joinDate: string
   verified: boolean
   membershipLevel: "Bronze" | "Silver" | "Gold" | "Platinum"
+  role?: "admin" | "user" // 👈 Thêm dòng này
 }
 
 interface AuthContextType {
   user: User | null
   login: (email: string, password: string) => Promise<void>
-  register: (userData: any) => Promise<void>
+  register: (userData: Partial<User>) => Promise<void>
   logout: () => void
   updateProfile: (userData: Partial<User>) => Promise<void>
   isLoading: boolean
@@ -33,7 +34,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  // Mock user data
   const mockUser: User = {
     id: "1",
     name: "Nguyễn Văn A",
@@ -50,10 +50,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    // Check if user is logged in from localStorage
     const savedUser = localStorage.getItem("user")
     if (savedUser) {
-      setUser(JSON.parse(savedUser))
+      try {
+        const parsedUser = JSON.parse(savedUser)
+        setUser(parsedUser)
+      } catch (error) {
+        console.error("Lỗi parse user từ localStorage:", error)
+        localStorage.removeItem("user")
+      }
     }
     setIsLoading(false)
   }, [])
@@ -61,23 +66,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, password: string) => {
     setIsLoading(true)
     try {
-      // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      // For demo purposes, accept any email/password
       setUser(mockUser)
       localStorage.setItem("user", JSON.stringify(mockUser))
     } catch (error) {
+      console.error("Đăng nhập lỗi:", error)
       throw new Error("Đăng nhập thất bại")
     } finally {
       setIsLoading(false)
     }
   }
 
-  const register = async (userData: any) => {
+  const register = async (userData: Partial<User>) => {
     setIsLoading(true)
     try {
-      // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
       const newUser: User = {
@@ -92,6 +94,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(newUser)
       localStorage.setItem("user", JSON.stringify(newUser))
     } catch (error) {
+      console.error("Đăng ký lỗi:", error)
       throw new Error("Đăng ký thất bại")
     } finally {
       setIsLoading(false)
@@ -105,16 +108,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const updateProfile = async (userData: Partial<User>) => {
     if (!user) return
-
     setIsLoading(true)
     try {
-      // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 500))
-
       const updatedUser = { ...user, ...userData }
       setUser(updatedUser)
       localStorage.setItem("user", JSON.stringify(updatedUser))
     } catch (error) {
+      console.error("Cập nhật hồ sơ lỗi:", error)
       throw new Error("Cập nhật thất bại")
     } finally {
       setIsLoading(false)

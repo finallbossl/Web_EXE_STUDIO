@@ -32,7 +32,7 @@ export default function StudiosPage() {
       location: "Quận 1, TP.HCM",
       district: "quan-1",
       priceFrom: 2000000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/anh-duong-studio-918172.jpg?height=200&width=300",
       verified: true,
       premium: true,
       services: ["Chụp ảnh cưới", "Chụp ảnh gia đình", "Chụp ảnh doanh nghiệp"],
@@ -50,7 +50,7 @@ export default function StudiosPage() {
       location: "Quận 3, TP.HCM",
       district: "quan-3",
       priceFrom: 1500000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/sddefault.jpg?height=200&width=300",
       verified: true,
       premium: false,
       services: ["Chụp ảnh cưới", "Chụp ảnh thời trang"],
@@ -68,7 +68,7 @@ export default function StudiosPage() {
       location: "Quận 7, TP.HCM",
       district: "quan-7",
       priceFrom: 3000000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/Concept-Da-Hoi-Senorita-2-1200x900.jpg?height=200&width=300",
       verified: true,
       premium: true,
       services: ["Chụp ảnh cưới", "Chụp ảnh gia đình", "Chụp ảnh sản phẩm"],
@@ -99,26 +99,31 @@ export default function StudiosPage() {
   ]
 
   const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, index) => (
-      <Star
-        key={index}
-        className={`w-4 h-4 ${index < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
-      />
-    ))
-  }
+  return Array.from({ length: 5 }, (_, index) => (
+    <Star
+      key={index}
+      className={`w-4 h-4 ${
+        index < Math.floor(rating)
+          ? "fill-yellow-400 text-yellow-400"
+          : "text-[#DDD3C4]"
+      }`}
+    />
+  ))
+}
 
   const getAvailabilityColor = (availability: string) => {
-    switch (availability) {
-      case "available":
-        return "bg-green-100 text-green-800"
-      case "busy":
-        return "bg-yellow-100 text-yellow-800"
-      case "unavailable":
-        return "bg-red-100 text-red-800"
-      default:
-        return "bg-gray-100 text-gray-800"
-    }
+  switch (availability) {
+    case "available":
+      return "bg-green-100 text-green-800" // trạng thái khả dụng
+    case "busy":
+      return "bg-yellow-100 text-yellow-800" // trạng thái bận, màu cam-be nhạt
+    case "unavailable":
+      return "bg-red-100 text-red-800" // trạng thái không khả dụng
+    default:
+      return "bg-gray-100 text-gray-800" // mặc định
   }
+}
+
 
   const getAvailabilityText = (availability: string) => {
     switch (availability) {
@@ -134,28 +139,30 @@ export default function StudiosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+   <div className="min-h-screen bg-[#EFE7DA]">
+  <Header />
 
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Studio Chụp Ảnh</h1>
-          <p className="text-xl mb-6">Tìm kiếm studio chụp ảnh chuyên nghiệp cho mọi nhu cầu</p>
+     {/* Hero Section */}
+<div className="bg-[#F5F1EB] text-[#6F5D4F] text-center py-12">
+  <div className="container mx-auto px-4">
+    <h1 className="text-4xl font-bold mb-4">Studio Chụp Ảnh</h1>
+    <p className="text-xl mb-6">Tìm kiếm studio chụp ảnh chuyên nghiệp cho mọi nhu cầu</p>
 
-          {/* Search Bar */}
-          <div className="max-w-2xl bg-white rounded-lg p-2 flex items-center">
-            <Search className="w-5 h-5 text-gray-400 ml-3" />
-            <Input
-              placeholder="Tìm kiếm studio, địa điểm..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="border-0 focus-visible:ring-0 text-gray-900"
-            />
-            <Button className="ml-2">Tìm kiếm</Button>
-          </div>
-        </div>
-      </div>
+    {/* Search Bar */}
+    <div className="w-full flex justify-center">
+  <div className="w-[700px] bg-white border border-[#C1B6A3] rounded-lg p-2 flex items-center shadow-sm mx-auto">
+    <Search className="w-5 h-5 text-[#B3907A] ml-3" />
+    <Input
+      placeholder="Tìm kiếm studio, địa điểm..."
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      className="border-0 focus-visible:ring-0 text-[#6F5D4F] placeholder:text-[#B3907A] bg-transparent"
+    />
+    <Button className="ml-2 bg-[#6F5D4F] text-white hover:bg-[#5d4c40]">Tìm kiếm</Button>
+  </div>
+</div>
+  </div>
+</div>
 
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
@@ -238,25 +245,19 @@ export default function StudiosPage() {
 
                 {/* Quick Filters */}
                 <div>
-                  <h4 className="font-medium mb-3">Bộ lọc nhanh</h4>
+                  <h4 className="font-medium mb-3 text-[#6F5D4F]">Bộ lọc nhanh</h4>
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2">
-                      <Checkbox id="verified" />
-                      <label htmlFor="verified" className="text-sm">
-                        Đã xác minh
-                      </label>
+                      <Checkbox id="verified" className="border-[#C1B6A3] text-[#6F5D4F] ring-offset-[#EFE7DA]" />
+                      <label htmlFor="verified" className="text-sm text-[#6F5D4F]">Đã xác minh</label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox id="premium" />
-                      <label htmlFor="premium" className="text-sm">
-                        Premium
-                      </label>
+                      <Checkbox id="premium" className="border-[#C1B6A3] text-[#6F5D4F] ring-offset-[#EFE7DA]" />
+                      <label htmlFor="premium" className="text-sm text-[#6F5D4F]">Premium</label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox id="available" />
-                      <label htmlFor="available" className="text-sm">
-                        Còn trống hôm nay
-                      </label>
+                      <Checkbox id="available" className="border-[#C1B6A3] text-[#6F5D4F] ring-offset-[#EFE7DA]" />
+                      <label htmlFor="available" className="text-sm text-[#6F5D4F]">Còn trống hôm nay</label>
                     </div>
                   </div>
                 </div>
@@ -312,7 +313,9 @@ export default function StudiosPage() {
             {/* Studios Grid/List */}
             <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" : "space-y-4"}>
               {studios.map((studio) => (
-                <Card key={studio.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <Card 
+                      key={studio.id} 
+                      className="overflow-hidden hover:shadow-md transition-shadow border border-[#E1DACA] bg-[#F9F6F1]">
                   <div className={viewMode === "list" ? "md:flex" : ""}>
                     <div className={`relative ${viewMode === "list" ? "md:w-80" : ""}`}>
                       <Image
@@ -324,17 +327,20 @@ export default function StudiosPage() {
                       />
                       <div className="absolute top-2 left-2 flex gap-2">
                         {studio.verified && (
-                          <Badge className="bg-blue-600">
+                          <Badge className="bg-[#B3907A] text-white">
                             <Shield className="w-3 h-3 mr-1" />
                             Verified
                           </Badge>
                         )}
                         {studio.premium && (
-                          <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500">Premium</Badge>
+                          <Badge className="bg-gradient-to-r from-[#C1B6A3] to-[#6F5D4F] text-white">Premium</Badge>
                         )}
                       </div>
                       <div className="absolute top-2 right-2">
-                        <Button variant="ghost" size="sm" className="bg-white/80 hover:bg-white">
+                        <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              className="bg-white/70 hover:bg-white text-[#6F5D4F] rounded-full p-1">
                           <Heart className="w-4 h-4" />
                         </Button>
                       </div>

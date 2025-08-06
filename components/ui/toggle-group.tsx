@@ -7,6 +7,12 @@ import { type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 import { toggleVariants } from "@/components/ui/toggle"
 
+// Bổ sung hệ màu be–nâu nếu cần dùng lại nhiều nơi
+const COLORS = {
+  accent: "bg-[#B3907A] text-white hover:bg-[#a17f6f]",
+  foreground: "text-[#6F5D4F]",
+}
+
 const ToggleGroupContext = React.createContext<
   VariantProps<typeof toggleVariants>
 >({
@@ -47,6 +53,7 @@ const ToggleGroupItem = React.forwardRef<
           variant: context.variant || variant,
           size: context.size || size,
         }),
+        COLORS.foreground,
         className
       )}
       {...props}

@@ -45,7 +45,7 @@ export default function MakeupPage() {
       location: "Quận 3, TP.HCM",
       district: "quan-3",
       priceFrom: 600000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/bg4z.jpg?height=200&width=300",
       verified: true,
       premium: true,
       services: ["Makeup cưới", "Makeup dự tiệc", "Làm tóc"],
@@ -65,7 +65,7 @@ export default function MakeupPage() {
       location: "Quận 1, TP.HCM",
       district: "quan-1",
       priceFrom: 800000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/maido_2_OWLJ.jpg?height=200&width=300",
       verified: true,
       premium: true,
       services: ["Makeup cưới", "Makeup nghệ thuật", "Chụp ảnh"],
@@ -85,7 +85,7 @@ export default function MakeupPage() {
       location: "Quận 7, TP.HCM",
       district: "quan-7",
       priceFrom: 500000,
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/makeup-1-17395309980871659412839.webp?height=200&width=300",
       verified: true,
       premium: false,
       services: ["Makeup cưới", "Makeup dự tiệc"],
@@ -121,7 +121,7 @@ export default function MakeupPage() {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
         key={index}
-        className={`w-4 h-4 ${index < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
+        className={`w-4 h-4 ${index < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-[#DDD3C4]"}`}
       />
     ))
   }
@@ -153,26 +153,28 @@ export default function MakeupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#EFE7DA]">
       <Header />
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-pink-500 to-purple-600 text-white py-12">
+      <div className="bg-[#F5F1EB] text-[#6F5D4F] text-center py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Makeup Artist</h1>
           <p className="text-xl mb-6">Tìm kiếm makeup artist chuyên nghiệp cho mọi dịp đặc biệt</p>
 
           {/* Search Bar */}
-          <div className="max-w-2xl bg-white rounded-lg p-2 flex items-center">
-            <Search className="w-5 h-5 text-gray-400 ml-3" />
-            <Input
-              placeholder="Tìm kiếm makeup artist, dịch vụ..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="border-0 focus-visible:ring-0 text-gray-900"
-            />
-            <Button className="ml-2">Tìm kiếm</Button>
-          </div>
+          <div className="w-full flex justify-center">
+  <div className="w-[700px] bg-white border border-[#C1B6A3] rounded-lg p-2 flex items-center shadow-sm mx-auto">
+    <Search className="w-5 h-5 text-[#B3907A] ml-3" />
+    <Input
+      placeholder="Tìm kiếm artists, dịch vụ..."
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      className="border-0 focus-visible:ring-0 text-[#6F5D4F] placeholder:text-[#B3907A] bg-transparent"
+    />
+    <Button className="ml-2 bg-[#6F5D4F] text-white hover:bg-[#5d4c40]">Tìm kiếm</Button>
+  </div>
+</div>
         </div>
       </div>
 
@@ -374,13 +376,13 @@ export default function MakeupPage() {
                       />
                       <div className="absolute top-2 left-2 flex gap-2">
                         {artist.verified && (
-                          <Badge className="bg-pink-600">
+                          <Badge className="bg-[#B3907A] text-white">
                             <Shield className="w-3 h-3 mr-1" />
                             Verified
                           </Badge>
                         )}
                         {artist.premium && (
-                          <Badge className="bg-gradient-to-r from-pink-400 to-purple-500">Premium</Badge>
+                          <Badge className="bg-gradient-to-r from-[#C1B6A3] to-[#6F5D4F] text-white">Premium</Badge>
                         )}
                       </div>
                       <div className="absolute top-2 right-2">
