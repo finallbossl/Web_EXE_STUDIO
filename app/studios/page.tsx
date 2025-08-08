@@ -26,13 +26,13 @@ export default function StudiosPage() {
   const studios = [
     {
       id: "1",
-      name: "Studio Ánh Dương",
-      rating: 4.9,
-      reviewCount: 127,
-      location: "Quận 1, TP.HCM",
-      district: "quan-1",
-      priceFrom: 2000000,
-      image: "/anh-duong-studio-918172.jpg?height=200&width=300",
+      name: "Studio 397",
+      rating: 4.8,
+      reviewCount: 100,
+      location: "Phường Quy Nhơn Nam, Gia Lai",
+      district: "quy-nhon-nam",
+      priceFrom: 1000000,
+      image: "/z6882513842164_149634a54892b45ee93ae71e1e6b9949.jpg?height=200&width=300",
       verified: true,
       premium: true,
       services: ["Chụp ảnh cưới", "Chụp ảnh gia đình", "Chụp ảnh doanh nghiệp"],
@@ -47,8 +47,8 @@ export default function StudiosPage() {
       name: "Studio Minh Châu",
       rating: 4.7,
       reviewCount: 89,
-      location: "Quận 3, TP.HCM",
-      district: "quan-3",
+      location: "Phường Quy Nhơn Tây, Gia Lai",
+      district: "quy-nhon-tay",
       priceFrom: 1500000,
       image: "/sddefault.jpg?height=200&width=300",
       verified: true,
@@ -65,8 +65,8 @@ export default function StudiosPage() {
       name: "Studio Hoàng Gia",
       rating: 4.8,
       reviewCount: 156,
-      location: "Quận 7, TP.HCM",
-      district: "quan-7",
+      location: "Phường Quy Nhơn Bắc, Gia Lai",
+      district: "quy-nhon-bac",
       priceFrom: 3000000,
       image: "/Concept-Da-Hoi-Senorita-2-1200x900.jpg?height=200&width=300",
       verified: true,
@@ -78,15 +78,50 @@ export default function StudiosPage() {
       availability: "available",
       description: "Studio cao cấp với trang thiết bị hiện đại nhất",
     },
+    {
+      id: "4",
+      name: "Photographer 101",
+      rating: 4.9,
+      reviewCount: 156,
+      location: "Phường Quy Nhơn Nam, Gia Lai",
+      district: "quy-nhon-nam",
+      priceFrom: 500000,
+      image: "/z6882514508460_988b87823d22374d5c0564a92f2a30b7.jpg?height=200&width=300",
+      verified: true,
+      premium: true,
+      services: ["Chụp ngoại cảnh", "Chụp ảnh couple"],
+      specialties: ["Outdoor", "Couple"],
+      completedProjects: 1200,
+      responseTime: "Trong 1 giờ",
+      availability: "available",
+      description: "Team photographer vui vẻ, chuyên nghiệp",
+    },
+    {
+      id: "5",
+      name: "Photographer AAA",
+      rating: 4.6,
+      reviewCount: 116,
+      location: "Phường Quy Nhơn Nam, Gia Lai",
+      district: "quy-nhon-nam",
+      priceFrom: 100000,
+      image: "/z6882514943586_b3bc70556ce087a45b3b46128b68cc0b.jpg",
+      verified: true,
+      premium: true,
+      services: ["Chụp ảnh sinh nhật", "Chụp ảnh couple"],
+      specialties: ["birthday", "Couple"],
+      completedProjects: 1200,
+      responseTime: "Trong 1 giờ",
+      availability: "available",
+      description: "Photographer vui vẻ, chuyên nghiệp, hỗ trợ nhiệt tình",
+    }
   ]
 
   const districts = [
-    { id: "quan-1", name: "Quận 1" },
-    { id: "quan-3", name: "Quận 3" },
-    { id: "quan-7", name: "Quận 7" },
-    { id: "quan-10", name: "Quận 10" },
-    { id: "binh-thanh", name: "Bình Thạnh" },
-    { id: "phu-nhuan", name: "Phú Nhuận" },
+    { id: "quy-nhon-dong", name: "Phường Quy Nhơn Đông" },
+    { id: "quy-nhon-bac", name: "Phường Quy Nhơn Bắc" },
+    { id: "quy-nhon-nam", name: "Phường Quy Nhơn Nam" },
+    { id: "quy-nhon", name: "Phường Quy Nhơn" },
+    { id: "quy-nhon-tay", name: "Phường Quy Nhơn Tây" },
   ]
 
   const services = [
@@ -96,6 +131,10 @@ export default function StudiosPage() {
     "Chụp ảnh thời trang",
     "Chụp ảnh sản phẩm",
     "Chụp ảnh sự kiện",
+    "Chụp ngoại cảnh",
+    "Chụp ảnh couple",
+    "Chụp ảnh tết",
+    "Chụp ảnh sinh nhật"
   ]
 
   const renderStars = (rating: number) => {
@@ -145,8 +184,8 @@ export default function StudiosPage() {
      {/* Hero Section */}
 <div className="bg-[#F5F1EB] text-[#6F5D4F] text-center py-12">
   <div className="container mx-auto px-4">
-    <h1 className="text-4xl font-bold mb-4">Studio Chụp Ảnh</h1>
-    <p className="text-xl mb-6">Tìm kiếm studio chụp ảnh chuyên nghiệp cho mọi nhu cầu</p>
+    <h1 className="text-[40px] md:text-[40px] font-medibold mb-4" style={{ fontFamily: "TQ-Kingston" }}>Studio Chụp Ảnh</h1>
+    <p className="text-[40px] md:text-[30px] mb-6" style={{ fontFamily: "Simplesnails" }}>Tìm kiếm studio chụp ảnh chuyên nghiệp cho mọi nhu cầu</p>
 
     {/* Search Bar */}
     <div className="w-full flex justify-center">

@@ -6,6 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Camera, Palette, Shirt, ChevronDown, Bell, User, Settings, LogOut, Heart, Calendar } from "lucide-react"
+import Image from "next/image"
 
 export function Header() {
   const { user, logout } = useAuth()
@@ -16,11 +17,17 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-button rounded-lg flex items-center justify-center">
-              <Camera className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold gradient-text">DepStudio</span>
-          </Link>
+  <div className="w-10 h-10 relative flex items-center justify-center overflow-hidden rounded-md">
+    <Image
+      src="/0a8d19ed-3e0f-44a7-b2c3-bed316cbafe5-removebg-preview.png"
+      alt="DepStudio Logo"
+      fill
+      className="object-contain scale-[2.8] mt-[2px]" // 👈 scale vừa phải + căn chỉnh lên một chút
+    />
+  </div>
+  <span className="text-[40px] md:text-[30px] font-bold gradient-text leading-none"style={{ fontFamily: "Simplesnails" }} >DepStudio</span>
+</Link>
+
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8">

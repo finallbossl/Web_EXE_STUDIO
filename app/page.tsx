@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
+import HeroBanner from "@/components/HeroBanner"
 import {
   Camera,
   Palette,
@@ -95,55 +96,9 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-<section className="py-20 bg-[#EFE7DA]">
-  <div className="container mx-auto px-4 text-center">
-    <h1
-  className="text-4xl md:text-6xl font-bold mb-6 text-[#6F5D4F]"
-  style={{ fontFamily: 'pierson' }}
->
-  Kết nối bạn với những dịch vụ tốt nhất
-</h1>
-    <p className="text-xl mb-8 max-w-2xl mx-auto text-[#6F5D4F]/80">
-      Studio chụp ảnh, makeup artist và thuê trang phục chuyên nghiệp cho mọi sự kiện đặc biệt của bạn
-    </p>
+       <HeroBanner/>
 
-    {/* Search Bar */}
-    <div className="max-w-2xl mx-auto bg-[#E1DACA] rounded-lg p-2 flex items-center shadow">
-      <Input
-        placeholder="Tìm kiếm dịch vụ, địa điểm..."
-        className="border-0 focus-visible:ring-0 bg-transparent text-[#6F5D4F] placeholder:text-[#6F5D4F]/50"
-      />
-      <Button className="ml-2 bg-[#B3907A] text-white hover:bg-[#A67B63]">
-        <Search className="w-4 h-4 mr-2" />
-        Tìm kiếm
-      </Button>
-    </div>
-
-    {/* Quick Service Links */}
-    <div className="flex justify-center space-x-4 mt-8">
-      <Button variant="outline" className="bg-[#EFE7DA] border border-[#C1B6A3] text-[#6F5D4F] hover:bg-[#E1DACA]" asChild>
-        <Link href="/studios">
-          <Camera className="w-4 h-4 mr-2" />
-          Studio
-        </Link>
-      </Button>
-      <Button variant="outline" className="bg-[#EFE7DA] border border-[#C1B6A3] text-[#6F5D4F] hover:bg-[#E1DACA]" asChild>
-        <Link href="/makeup">
-          <Palette className="w-4 h-4 mr-2" />
-          Makeup
-        </Link>
-      </Button>
-      <Button variant="outline" className="bg-[#EFE7DA] border border-[#C1B6A3] text-[#6F5D4F] hover:bg-[#E1DACA]" asChild>
-        <Link href="/rental">
-          <Shirt className="w-4 h-4 mr-2" />
-          Thuê đồ
-        </Link>
-      </Button>
-    </div>
-  </div>
-</section>
-
-
+  <div className="container mx-auto px-4 text-center"></div>
      {/* Stats Section */}
 <section className="py-16 bg-[#F5F1EB]">
   <div className="container mx-auto px-4">

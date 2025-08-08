@@ -159,8 +159,8 @@ export default function MakeupPage() {
       {/* Hero Section */}
       <div className="bg-[#F5F1EB] text-[#6F5D4F] text-center py-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Makeup Artist</h1>
-          <p className="text-xl mb-6">Tìm kiếm makeup artist chuyên nghiệp cho mọi dịp đặc biệt</p>
+          <h1 className="text-[40px] md:text-[50px] font-medibold mb-4" style={{ fontFamily: "TQ-Kingston" }}>Makeup Artist</h1>
+          <p className="text-[40px] md:text-[30px] mb-6" style={{ fontFamily: "Simplesnails" }}>Tìm kiếm makeup artist chuyên nghiệp cho mọi dịp đặc biệt</p>
 
           {/* Search Bar */}
           <div className="w-full flex justify-center">
