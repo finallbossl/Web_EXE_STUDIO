@@ -26,13 +26,14 @@ export default function StudiosPage() {
   const studios = [
     {
       id: "1",
-      name: "Studio Ánh Dương",
-      rating: 4.9,
-      reviewCount: 127,
-      location: "Quận 1, TP.HCM",
-      district: "quan-1",
-      priceFrom: 2000000,
-      image: "/studio1.png?height=200&width=300",
+      name: "Studio 397",
+      rating: 4.8,
+      reviewCount: 100,
+      location: "Phường Quy Nhơn Nam, Gia Lai",
+      district: "quy-nhon-nam",
+      priceFrom: 1000000,
+      image: "/z6882513842164_149634a54892b45ee93ae71e1e6b9949.jpg?height=200&width=300",
+
       verified: true,
       premium: true,
       services: ["Chụp ảnh cưới", "Chụp ảnh gia đình", "Chụp ảnh doanh nghiệp"],
@@ -47,10 +48,11 @@ export default function StudiosPage() {
       name: "Studio Minh Châu",
       rating: 4.7,
       reviewCount: 89,
-      location: "Quận 3, TP.HCM",
-      district: "quan-3",
+      location: "Phường Quy Nhơn Tây, Gia Lai",
+      district: "quy-nhon-tay",
       priceFrom: 1500000,
-      image: "/studio2.png?height=200&width=300",
+      image: "/sddefault.jpg?height=200&width=300",
+
       verified: true,
       premium: false,
       services: ["Chụp ảnh cưới", "Chụp ảnh thời trang"],
@@ -65,10 +67,12 @@ export default function StudiosPage() {
       name: "Studio Hoàng Gia",
       rating: 4.8,
       reviewCount: 156,
-      location: "Quận 7, TP.HCM",
-      district: "quan-7",
+      location: "Phường Quy Nhơn Bắc, Gia Lai",
+      district: "quy-nhon-bac",
       priceFrom: 3000000,
-      image: "/studio3.png?height=200&width=300",
+
+      image: "/Concept-Da-Hoi-Senorita-2-1200x900.jpg?height=200&width=300",
+
       verified: true,
       premium: true,
       services: ["Chụp ảnh cưới", "Chụp ảnh gia đình", "Chụp ảnh sản phẩm"],
@@ -78,15 +82,52 @@ export default function StudiosPage() {
       availability: "available",
       description: "Studio cao cấp với trang thiết bị hiện đại nhất",
     },
+    {
+      id: "4",
+      name: "Photographer 101",
+      rating: 4.9,
+      reviewCount: 156,
+      location: "Phường Quy Nhơn Nam, Gia Lai",
+      district: "quy-nhon-nam",
+      priceFrom: 500000,
+      image: "/z6882514508460_988b87823d22374d5c0564a92f2a30b7.jpg?height=200&width=300",
+      verified: true,
+      premium: true,
+      services: ["Chụp ngoại cảnh", "Chụp ảnh couple"],
+      specialties: ["Outdoor", "Couple"],
+      completedProjects: 1200,
+      responseTime: "Trong 1 giờ",
+      availability: "available",
+      description: "Team photographer vui vẻ, chuyên nghiệp",
+    },
+    {
+      id: "5",
+      name: "Photographer AAA",
+      rating: 4.6,
+      reviewCount: 116,
+      location: "Phường Quy Nhơn Nam, Gia Lai",
+      district: "quy-nhon-nam",
+      priceFrom: 100000,
+      image: "/z6882514943586_b3bc70556ce087a45b3b46128b68cc0b.jpg",
+      verified: true,
+      premium: true,
+      services: ["Chụp ảnh sinh nhật", "Chụp ảnh couple"],
+      specialties: ["birthday", "Couple"],
+      completedProjects: 1200,
+      responseTime: "Trong 1 giờ",
+      availability: "available",
+      description: "Photographer vui vẻ, chuyên nghiệp, hỗ trợ nhiệt tình",
+    }
   ]
 
   const districts = [
-    { id: "quan-1", name: "Nguyễn Thái Học , TP Quy Nhơn" },
-    { id: "quan-3", name: "Nguyễn Thái Học , TP Quy Nhơn" },
-    { id: "quan-7", name: "Nguyễn Thái Học , TP Quy Nhơn" },
-    { id: "quan-10", name: "Nguyễn Thái Học , TP Quy Nhơn" },
-    { id: "binh-thanh", name: "Nguyễn Thái Học , TP Quy Nhơn" },
-    { id: "phu-nhuan", name: "Nguyễn Thái Học , TP Quy Nhơn" },
+
+    { id: "quy-nhon-dong", name: "Phường Quy Nhơn Đông" },
+    { id: "quy-nhon-bac", name: "Phường Quy Nhơn Bắc" },
+    { id: "quy-nhon-nam", name: "Phường Quy Nhơn Nam" },
+    { id: "quy-nhon", name: "Phường Quy Nhơn" },
+    { id: "quy-nhon-tay", name: "Phường Quy Nhơn Tây" },
+
   ]
 
   const services = [
@@ -96,29 +137,38 @@ export default function StudiosPage() {
     "Chụp ảnh thời trang",
     "Chụp ảnh sản phẩm",
     "Chụp ảnh sự kiện",
+    "Chụp ngoại cảnh",
+    "Chụp ảnh couple",
+    "Chụp ảnh tết",
+    "Chụp ảnh sinh nhật"
   ]
 
   const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, index) => (
-      <Star
-        key={index}
-        className={`w-4 h-4 ${index < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
-      />
-    ))
-  }
+  return Array.from({ length: 5 }, (_, index) => (
+    <Star
+      key={index}
+      className={`w-4 h-4 ${
+        index < Math.floor(rating)
+          ? "fill-yellow-400 text-yellow-400"
+          : "text-[#DDD3C4]"
+      }`}
+    />
+  ))
+}
 
   const getAvailabilityColor = (availability: string) => {
-    switch (availability) {
-      case "available":
-        return "bg-green-100 text-green-800"
-      case "busy":
-        return "bg-yellow-100 text-yellow-800"
-      case "unavailable":
-        return "bg-red-100 text-red-800"
-      default:
-        return "bg-gray-100 text-gray-800"
-    }
+  switch (availability) {
+    case "available":
+      return "bg-green-100 text-green-800" // trạng thái khả dụng
+    case "busy":
+      return "bg-yellow-100 text-yellow-800" // trạng thái bận, màu cam-be nhạt
+    case "unavailable":
+      return "bg-red-100 text-red-800" // trạng thái không khả dụng
+    default:
+      return "bg-gray-100 text-gray-800" // mặc định
   }
+}
+
 
   const getAvailabilityText = (availability: string) => {
     switch (availability) {
@@ -134,28 +184,30 @@ export default function StudiosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+   <div className="min-h-screen bg-[#EFE7DA]">
+  <Header />
 
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Studio Chụp Ảnh</h1>
-          <p className="text-xl mb-6">Tìm kiếm studio chụp ảnh chuyên nghiệp cho mọi nhu cầu</p>
+     {/* Hero Section */}
+<div className="bg-[#F5F1EB] text-[#6F5D4F] text-center py-12">
+  <div className="container mx-auto px-4">
+    <h1 className="text-[40px] md:text-[40px] font-medibold mb-4" style={{ fontFamily: "TQ-Kingston" }}>Studio Chụp Ảnh</h1>
+    <p className="text-[40px] md:text-[30px] mb-6" style={{ fontFamily: "Simplesnails" }}>Tìm kiếm studio chụp ảnh chuyên nghiệp cho mọi nhu cầu</p>
 
-          {/* Search Bar */}
-          <div className="max-w-2xl bg-white rounded-lg p-2 flex items-center">
-            <Search className="w-5 h-5 text-gray-400 ml-3" />
-            <Input
-              placeholder="Tìm kiếm studio, địa điểm..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="border-0 focus-visible:ring-0 text-gray-900"
-            />
-            <Button className="ml-2">Tìm kiếm</Button>
-          </div>
-        </div>
-      </div>
+    {/* Search Bar */}
+    <div className="w-full flex justify-center">
+  <div className="w-[700px] bg-white border border-[#C1B6A3] rounded-lg p-2 flex items-center shadow-sm mx-auto">
+    <Search className="w-5 h-5 text-[#B3907A] ml-3" />
+    <Input
+      placeholder="Tìm kiếm studio, địa điểm..."
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      className="border-0 focus-visible:ring-0 text-[#6F5D4F] placeholder:text-[#B3907A] bg-transparent"
+    />
+    <Button className="ml-2 bg-[#6F5D4F] text-white hover:bg-[#5d4c40]">Tìm kiếm</Button>
+  </div>
+</div>
+  </div>
+</div>
 
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
@@ -238,25 +290,19 @@ export default function StudiosPage() {
 
                 {/* Quick Filters */}
                 <div>
-                  <h4 className="font-medium mb-3">Bộ lọc nhanh</h4>
+                  <h4 className="font-medium mb-3 text-[#6F5D4F]">Bộ lọc nhanh</h4>
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2">
-                      <Checkbox id="verified" />
-                      <label htmlFor="verified" className="text-sm">
-                        Đã xác minh
-                      </label>
+                      <Checkbox id="verified" className="border-[#C1B6A3] text-[#6F5D4F] ring-offset-[#EFE7DA]" />
+                      <label htmlFor="verified" className="text-sm text-[#6F5D4F]">Đã xác minh</label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox id="premium" />
-                      <label htmlFor="premium" className="text-sm">
-                        Premium
-                      </label>
+                      <Checkbox id="premium" className="border-[#C1B6A3] text-[#6F5D4F] ring-offset-[#EFE7DA]" />
+                      <label htmlFor="premium" className="text-sm text-[#6F5D4F]">Premium</label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox id="available" />
-                      <label htmlFor="available" className="text-sm">
-                        Còn trống hôm nay
-                      </label>
+                      <Checkbox id="available" className="border-[#C1B6A3] text-[#6F5D4F] ring-offset-[#EFE7DA]" />
+                      <label htmlFor="available" className="text-sm text-[#6F5D4F]">Còn trống hôm nay</label>
                     </div>
                   </div>
                 </div>
@@ -312,7 +358,9 @@ export default function StudiosPage() {
             {/* Studios Grid/List */}
             <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" : "space-y-4"}>
               {studios.map((studio) => (
-                <Card key={studio.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <Card 
+                      key={studio.id} 
+                      className="overflow-hidden hover:shadow-md transition-shadow border border-[#E1DACA] bg-[#F9F6F1]">
                   <div className={viewMode === "list" ? "md:flex" : ""}>
                     <div className={`relative ${viewMode === "list" ? "md:w-80" : ""}`}>
                       <Image
@@ -324,17 +372,20 @@ export default function StudiosPage() {
                       />
                       <div className="absolute top-2 left-2 flex gap-2">
                         {studio.verified && (
-                          <Badge className="bg-blue-600">
+                          <Badge className="bg-[#B3907A] text-white">
                             <Shield className="w-3 h-3 mr-1" />
                             Verified
                           </Badge>
                         )}
                         {studio.premium && (
-                          <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500">Premium</Badge>
+                          <Badge className="bg-gradient-to-r from-[#C1B6A3] to-[#6F5D4F] text-white">Premium</Badge>
                         )}
                       </div>
                       <div className="absolute top-2 right-2">
-                        <Button variant="ghost" size="sm" className="bg-white/80 hover:bg-white">
+                        <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              className="bg-white/70 hover:bg-white text-[#6F5D4F] rounded-full p-1">
                           <Heart className="w-4 h-4" />
                         </Button>
                       </div>

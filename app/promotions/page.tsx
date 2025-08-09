@@ -211,35 +211,103 @@ export default function PromotionsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-transparent">
+    <div className="min-h-screen bg-[#EFE7DA] text-[#6F5D4F]">
       <Header />
-      <div className="container mx-auto px-4">
-        
-        <div className="mb-8">
-          <div className="content-overlay p-8 max-w-4xl mx-auto text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Gift className="w-8 h-8 text-pink-600" />
-              <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-600 to-teal-600 bg-clip-text text-transparent">
-                Ưu đãi đặc biệt
-              </h1>
+
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-[#6F5D4F] mb-4">Ưu đãi & Khuyến mãi</h1>
+          <p className="text-[#6F5D4F]/70 max-w-2xl mx-auto">
+            Khám phá những ưu đãi hấp dẫn từ các nhà cung cấp dịch vụ hàng đầu
+          </p>
+        </div>
+
+        {/* Search and Filter */}
+        <div className="bg-[#F5F1EB] border border-[#C1B6A3] rounded-lg p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-[#6F5D4F]/50" />
+              <Input
+                placeholder="Tìm kiếm ưu đãi..."
+                className="pl-10 bg-[#EFE7DA] border border-[#C1B6A3] text-[#6F5D4F] placeholder:text-[#6F5D4F]/50"
+              />
             </div>
-            <p className="text-xl text-muted-foreground">
-              Khám phá {promotions.length} ưu đãi hấp dẫn từ các studio hàng đầu
-            </p>
+            <Select defaultValue="all">
+              <SelectTrigger className="bg-[#EFE7DA] border border-[#C1B6A3] text-[#6F5D4F]">
+                <SelectValue placeholder="Danh mục" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category) => (
+                  <SelectItem key={category.value} value={category.value}>
+                    {category.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select defaultValue="newest">
+              <SelectTrigger className="bg-[#EFE7DA] border border-[#C1B6A3] text-[#6F5D4F]">
+                <SelectValue placeholder="Sắp xếp" />
+              </SelectTrigger>
+              <SelectContent>
+                {sortOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button className="bg-[#6F5D4F] text-white hover:opacity-90">
+              <Filter className="w-4 h-4 mr-2" />
+              Lọc
+            </Button>
           </div>
         </div>
 
-        {/* Hot Deals Banner */}
-        <div className="mb-8">
-          <Card className="glass-card bg-gradient-to-r from-red-50 to-pink-50 border-red-200">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                  <Gift className="w-6 h-6 text-red-600" />
+        {/* Promotions Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {promotions.map((promo) => (
+            <Card
+              key={promo.id}
+              className="overflow-hidden border border-[#C1B6A3] bg-white transition-all duration-300 rounded-xl hover:shadow-xl hover:-translate-y-1"
+            >
+              <div className="relative">
+                <Image
+                  src={promo.image || "/placeholder.svg"}
+                  alt={promo.title}
+                  width={300}
+                  height={200}
+                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute top-2 left-2 flex gap-2">
+                  <Badge className={`${getDiscountColor(promo.discount)} text-white`}>
+                    <Gift className="w-3 h-3 mr-1" />
+                    {promo.discount}
+                  </Badge>
+                  {promo.isFlash && (
+                    <Badge className="bg-red-600 text-white animate-pulse">
+                      <Clock className="w-3 h-3 mr-1" />
+                      Flash Sale
+                    </Badge>
+                  )}
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-red-800">Ưu đãi HOT nhất tuần!</h3>
-                  <p className="text-red-600">Số lượng có hạn, nhanh tay đặt lịch ngay!</p>
+                <div className="absolute top-2 right-2">
+                  <Badge variant="secondary" className="bg-white/20 text-white">
+                    {promo.category === "studio"
+                      ? "Studio"
+                      : promo.category === "makeup"
+                        ? "Makeup"
+                        : promo.category === "rental"
+                          ? "Thuê đồ"
+                          : "Combo"}
+                  </Badge>
+                </div>
+                <div className="absolute bottom-2 right-2">
+                  <Badge className="bg-[#6F5D4F]/30 text-white">
+                    <Calendar className="w-3 h-3 mr-1" />
+                    {getDaysLeft(promo.validUntil)} ngày
+                  </Badge>
+
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -265,179 +333,76 @@ export default function PromotionsPage() {
           </Card>
         </div>
 
-        {/* Filters */}
-        <Card className="glass-card mb-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Filter className="w-5 h-5" />
-              Bộ lọc ưu đãi
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <Input
-                  placeholder="Tìm kiếm ưu đãi..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
+              <CardContent className="p-6 bg-white text-[#6F5D4F]">
+                <h3 className="text-xl font-semibold mb-2 text-white">{promo.title}</h3>
+                <p className="text-[#6F5D4F]/70 text-sm mb-4 line-clamp-2">{promo.description}</p>
 
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Chọn danh mục" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Tất cả danh mục</SelectItem>
-                  <SelectItem value="Chụp ảnh cưới">Chụp ảnh cưới</SelectItem>
-                  <SelectItem value="Makeup">Makeup</SelectItem>
-                  <SelectItem value="Quay phim">Quay phim</SelectItem>
-                  <SelectItem value="Thiết kế">Thiết kế</SelectItem>
-                  <SelectItem value="Combo">Combo</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Loại ưu đãi" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Tất cả loại</SelectItem>
-                  <SelectItem value="Giảm giá">Giảm giá</SelectItem>
-                  <SelectItem value="Tặng kèm">Tặng kèm</SelectItem>
-                  <SelectItem value="Flash Sale">Flash Sale</SelectItem>
-                  <SelectItem value="Mua 1 tặng 1">Mua 1 tặng 1</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sắp xếp theo" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="newest">Mới nhất</SelectItem>
-                  <SelectItem value="ending">Sắp hết hạn</SelectItem>
-                  <SelectItem value="discount">Giảm giá cao nhất</SelectItem>
-                  <SelectItem value="popular">Phổ biến nhất</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Results */}
-        <div className="mb-6">
-          <p className="text-muted-foreground">Hiển thị {sortedPromotions.length} ưu đãi</p>
-        </div>
-
-        {/* Promotions Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortedPromotions.map((promo) => {
-            const daysLeft = calculateDaysLeft(promo.validTo)
-            const usagePercent = (promo.usedCount / promo.maxUsage) * 100
-
-            return (
-              <Card key={promo.id} className="glass-card overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-video relative">
-                  <Image src={promo.image || "/placeholder.svg"} alt={promo.title} fill className="object-cover" />
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    {getDiscountBadge(promo)}
-                    {promo.isHot && <Badge className="bg-orange-500 text-white">HOT</Badge>}
-                    {promo.isExpiring && <Badge className="bg-red-600 text-white">Sắp hết hạn</Badge>}
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center gap-2 text-sm text-[#6F5D4F]/70">
+                    <MapPin className="w-4 h-4" />
+                    <span className="text-white">{promo.provider}</span>
                   </div>
-                  <div className="absolute top-4 right-4">
-                    <Badge variant="secondary" className="bg-black/70 text-white">
-                      <Clock className="w-3 h-3 mr-1" />
-                      {daysLeft > 0 ? `${daysLeft} ngày` : "Hết hạn"}
-                    </Badge>
+                  <div className="flex items-center gap-2 text-sm text-[#6F5D4F]/70">
+                    <Star className="w-4 h-4" />
+                    <span className="text-white">Đơn tối thiểu: {promo.minOrder.toLocaleString()}đ</span>
                   </div>
                 </div>
 
-                <CardHeader>
-                  <CardTitle className="text-lg line-clamp-2">{promo.title}</CardTitle>
-                  <CardDescription className="line-clamp-2">{promo.description}</CardDescription>
-                </CardHeader>
+                {/* Usage Progress */}
+                <div className="mb-4">
+                  <div className="flex justify-between text-sm text-[#6F5D4F]/70 mb-1">
+                    <span >Đã sử dụng</span>
+                    <span >
+                      {promo.used}/{promo.total}
+                    </span>
+                  </div>
+                  <div className="w-full bg-[#EFE7DA] rounded-full h-2">
+                    <div
+                      className="bg-[#B3907A] h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${(promo.used / promo.total) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
 
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-sm text-muted-foreground">Studio:</span>
-                        <p className="font-medium">{promo.studio}</p>
-                      </div>
-                      <Badge variant="outline">{promo.category}</Badge>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">Giá gốc:</span>
-                        <span className="text-sm line-through text-muted-foreground">{promo.originalPrice}</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">Giá ưu đãi:</span>
-                        <span className="text-lg font-bold text-primary">{promo.salePrice}</span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Đã sử dụng:</span>
-                        <span>
-                          {promo.usedCount}/{promo.maxUsage}
-                        </span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className="bg-gradient-to-r from-pink-500 to-teal-500 h-2 rounded-full"
-                          style={{ width: `${usagePercent}%` }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div className="text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        <span>
-                          {promo.validFrom} - {promo.validTo}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2">
-                      <Button className="flex-1" asChild>
-                        <Link href={`/promotions/${promo.id}`}>Xem chi tiết</Link>
-                      </Button>
-                      <Button variant="outline" asChild>
-                        <Link href={`/booking?promo=${promo.id}`}>Đặt ngay</Link>
-                      </Button>
+                <div className="flex items-center justify-between">
+                  <div className="text-center">
+                    <div className="text-xs text-[#6F5D4F]/70">Mã giảm giá</div>
+                    <div className="font-mono font-bold bg-[#EFE7DA] text-[#6F5D4F] px-2 py-1 rounded text-sm">
+                      {promo.code}
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            )
-          })}
+                  <Button
+                    size="sm"
+                    className="bg-[#6F5D4F]/80 text-white hover:bg-[#5c4b3f]"
+                  >
+                    Sử dụng ngay
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
-        {sortedPromotions.length === 0 && (
-          <div className="text-center py-12">
-            <div className="content-overlay p-8 max-w-md mx-auto">
-              <p className="text-muted-foreground text-lg mb-4">
-                Không tìm thấy ưu đãi nào phù hợp với tiêu chí tìm kiếm.
-              </p>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSearchTerm("")
-                  setSelectedCategory("all")
-                  setSelectedType("all")
-                  setSortBy("newest")
-                }}
-              >
-                Xóa bộ lọc
-              </Button>
-            </div>
+        {/* Load More */}
+        <div className="text-center mt-12">
+          <Button variant="outline" size="lg" className="bg-white text-[#6F5D4F] border-[#C1B6A3] hover:bg-[#F5F0E7]">
+            Xem thêm ưu đãi
+          </Button>
+        </div>
+
+        {/* Newsletter Signup */}
+        <div className="mt-16 border border-[#C1B6A3] rounded-lg p-8 text-center bg-white">
+          <h3 className="text-2xl font-bold mb-4 text-[#6F5D4F]">Đăng ký nhận ưu đãi</h3>
+          <p className="text-[#6F5D4F]/70 mb-6">Nhận thông báo về các ưu đãi mới nhất qua email</p>
+          <div className="max-w-md mx-auto flex gap-2">
+            <Input
+              placeholder="Nhập email của bạn"
+              className="bg-[#EFE7DA] border border-[#C1B6A3] text-[#6F5D4F] placeholder:text-[#6F5D4F]/50"
+            />
+            <Button className="bg-[#B3907A] text-white hover:bg-[#6F5D4F]">
+              Đăng ký
+            </Button>
+
           </div>
         )}
       </div>

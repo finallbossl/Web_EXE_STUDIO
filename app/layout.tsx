@@ -7,7 +7,7 @@ import ClientOnly from "@/components/ClientOnly";
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "BookingHub - Nền tảng đặt lịch dịch vụ",
+  title: "DepStudio - Nền tảng đặt lịch dịch vụ",
   description: "Kết nối bạn với những dịch vụ tốt nhất",
 }
 
@@ -19,9 +19,9 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body className={inter.className}>
-         <ClientOnly>
-          <AuthProvider>{children}</AuthProvider>
-        </ClientOnly>
+        <AuthProvider>{children}</AuthProvider>
+        {/* {children} */}
+
       </body>
     </html>
   )

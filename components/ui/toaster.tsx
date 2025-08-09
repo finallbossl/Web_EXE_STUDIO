@@ -10,6 +10,10 @@ import {
   ToastViewport,
 } from "@/components/ui/toast"
 
+const COLORS = {
+  text: "text-[#6F5D4F]",
+}
+
 export function Toaster() {
   const { toasts } = useToast()
 
@@ -19,9 +23,9 @@ export function Toaster() {
         return (
           <Toast key={id} {...props}>
             <div className="grid gap-1">
-              {title && <ToastTitle>{title}</ToastTitle>}
+              {title && <ToastTitle className={COLORS.text}>{title}</ToastTitle>}
               {description && (
-                <ToastDescription>{description}</ToastDescription>
+                <ToastDescription className={COLORS.text}>{description}</ToastDescription>
               )}
             </div>
             {action}

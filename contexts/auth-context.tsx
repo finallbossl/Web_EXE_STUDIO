@@ -16,6 +16,7 @@ interface User {
   joinDate: string
   verified: boolean
   membershipLevel: "Bronze" | "Silver" | "Gold" | "Platinum"
+  role?: "admin" | "user" // 👈 Thêm dòng này
 }
 
 interface AuthContextType {

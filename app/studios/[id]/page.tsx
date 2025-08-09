@@ -57,8 +57,10 @@ export default function StudioDetailPage({ params }: { params: Promise<{ id: str
       instagram: "@anhdương_studio",
       facebook: "AnhDuongStudio",
     },
-    coverImage: "/studio1.png?height=400&width=800",
-    profileImage: "/studio1.png?height=200&width=200",
+
+    coverImage: "/anh-duong-studio-918172.jpg?height=400&width=800",
+    profileImage: "/anh-duong-studio-918172.jpg?height=200&width=200",
+
     verified: true,
     premium: true,
     description: `Studio Ánh Dương được thành lập từ năm 2016 với đội ngũ nhiếp ảnh gia chuyên nghiệp và giàu kinh nghiệm. 

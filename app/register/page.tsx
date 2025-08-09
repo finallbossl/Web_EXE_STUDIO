@@ -100,7 +100,7 @@ export default function RegisterPage() {
               </div>
             </div>
             <CardTitle className="text-2xl font-bold gradient-text">Đăng ký</CardTitle>
-            <CardDescription className="text-white/70">Tạo tài khoản BookingHub mới</CardDescription>
+            <CardDescription className="text-white/70">Tạo tài khoản DepStudio mới</CardDescription>
 
             {/* Progress */}
             <div className="mt-4">
