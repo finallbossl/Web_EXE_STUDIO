@@ -33,6 +33,7 @@ export default function StudiosPage() {
       district: "quy-nhon-nam",
       priceFrom: 1000000,
       image: "/z6882513842164_149634a54892b45ee93ae71e1e6b9949.jpg?height=200&width=300",
+
       verified: true,
       premium: true,
       services: ["Chụp ảnh cưới", "Chụp ảnh gia đình", "Chụp ảnh doanh nghiệp"],
@@ -51,6 +52,7 @@ export default function StudiosPage() {
       district: "quy-nhon-tay",
       priceFrom: 1500000,
       image: "/sddefault.jpg?height=200&width=300",
+
       verified: true,
       premium: false,
       services: ["Chụp ảnh cưới", "Chụp ảnh thời trang"],
@@ -68,7 +70,9 @@ export default function StudiosPage() {
       location: "Phường Quy Nhơn Bắc, Gia Lai",
       district: "quy-nhon-bac",
       priceFrom: 3000000,
+
       image: "/Concept-Da-Hoi-Senorita-2-1200x900.jpg?height=200&width=300",
+
       verified: true,
       premium: true,
       services: ["Chụp ảnh cưới", "Chụp ảnh gia đình", "Chụp ảnh sản phẩm"],
@@ -117,11 +121,13 @@ export default function StudiosPage() {
   ]
 
   const districts = [
+
     { id: "quy-nhon-dong", name: "Phường Quy Nhơn Đông" },
     { id: "quy-nhon-bac", name: "Phường Quy Nhơn Bắc" },
     { id: "quy-nhon-nam", name: "Phường Quy Nhơn Nam" },
     { id: "quy-nhon", name: "Phường Quy Nhơn" },
     { id: "quy-nhon-tay", name: "Phường Quy Nhơn Tây" },
+
   ]
 
   const services = [

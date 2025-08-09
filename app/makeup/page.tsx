@@ -42,10 +42,11 @@ export default function MakeupPage() {
       name: "Makeup Artist Linh",
       rating: 4.8,
       reviewCount: 89,
-      location: "Quận 3, TP.HCM",
+      location: "Nguyễn Thái Học, TP Quy Nhơn",
       district: "quan-3",
       priceFrom: 600000,
       image: "/bg4z.jpg?height=200&width=300",
+
       verified: true,
       premium: true,
       services: ["Makeup cưới", "Makeup dự tiệc", "Làm tóc"],
@@ -62,10 +63,11 @@ export default function MakeupPage() {
       name: "Beauty Artist Mai",
       rating: 4.9,
       reviewCount: 156,
-      location: "Quận 1, TP.HCM",
+      location: "Nguyễn Thái Học, TP Quy Nhơn",
       district: "quan-1",
       priceFrom: 800000,
       image: "/maido_2_OWLJ.jpg?height=200&width=300",
+
       verified: true,
       premium: true,
       services: ["Makeup cưới", "Makeup nghệ thuật", "Chụp ảnh"],
@@ -82,10 +84,11 @@ export default function MakeupPage() {
       name: "Trang Điểm Hương",
       rating: 4.7,
       reviewCount: 124,
-      location: "Quận 7, TP.HCM",
+      location: "Nguyễn Thái Học, TP Quy Nhơn",
       district: "quan-7",
       priceFrom: 500000,
       image: "/makeup-1-17395309980871659412839.webp?height=200&width=300",
+
       verified: true,
       premium: false,
       services: ["Makeup cưới", "Makeup dự tiệc"],
@@ -100,12 +103,12 @@ export default function MakeupPage() {
   ]
 
   const districts = [
-    { id: "quan-1", name: "Quận 1" },
-    { id: "quan-3", name: "Quận 3" },
-    { id: "quan-7", name: "Quận 7" },
-    { id: "quan-10", name: "Quận 10" },
-    { id: "binh-thanh", name: "Bình Thạnh" },
-    { id: "phu-nhuan", name: "Phú Nhuận" },
+    { id: "quan-1", name: "Quy Nhơn" },
+    { id: "quan-3", name: "Quy Nhơn" },
+    { id: "quan-7", name: "Quy Nhơn" },
+    { id: "quan-10", name: "Quy Nhơn" },
+    { id: "binh-thanh", name: "Quy Nhơn" },
+    { id: "phu-nhuan", name: "Quy Nhơn" },
   ]
 
   const services = [

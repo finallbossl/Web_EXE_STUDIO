@@ -38,29 +38,34 @@ export default function DashboardPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const isWelcome = searchParams.get("welcome") === "true"
-  const [showWelcome, setShowWelcome] = useState(isWelcome)
+  const [showWelcome, setShowWelcome] = useState(false)
+  const [hydrated, setHydrated] = useState(false)
+
+  useEffect(() => {
+    setShowWelcome(isWelcome)
+  }, [isWelcome])
 
   useEffect(() => {
     if (!user) {
       router.push("/login")
+    } else {
+      setHydrated(true)
     }
   }, [user, router])
 
-  if (!user) {
-    return null
-  }
+  if (!user || !hydrated) return null
 
-  // Mock data
-  const stats = {
+  // Move mock data into state to avoid hydration mismatch
+  const [stats] = useState({
     totalBookings: 12,
     completedBookings: 8,
     upcomingBookings: 2,
     favoriteProviders: 15,
     totalSpent: 25000000,
     pointsEarned: 2500,
-  }
+  })
 
-  const upcomingBookings = [
+  const [upcomingBookings] = useState([
     {
       id: "1",
       type: "studio",
@@ -85,7 +90,57 @@ export default function DashboardPage() {
       image: "/placeholder.svg?height=60&width=60",
       address: "456 Lê Lợi, Quận 1",
     },
-  ]
+  ])
+
+  const [recommendations] = useState([
+    {
+      id: "1",
+      type: "studio",
+      name: "Studio Hoàng Gia",
+      rating: 4.8,
+      location: "Quận 3, TP.HCM",
+      image: "/placeholder.svg?height=80&width=80",
+      priceFrom: 2000000,
+      reason: "Phù hợp với sở thích của bạn",
+    },
+    {
+      id: "2",
+      type: "makeup",
+      name: "Beauty Expert Trang",
+      rating: 4.9,
+      location: "Quận 1, TP.HCM",
+      image: "/placeholder.svg?height=80&width=80",
+      priceFrom: 1200000,
+      reason: "Được đánh giá cao bởi khách hàng",
+    },
+  ])
+
+  const [membershipProgress] = useState({
+    current: "Gold",
+    next: "Platinum",
+    currentPoints: 2500,
+    nextLevelPoints: 5000,
+    progress: (2500 / 5000) * 100,
+  })
+
+  const getDateText = (date: Date) => {
+    if (isToday(date)) return "Hôm nay"
+    if (isTomorrow(date)) return "Ngày mai"
+    return format(date, "dd/MM/yyyy", { locale: vi })
+  }
+
+  const getServiceIcon = (type: string) => {
+    switch (type) {
+      case "studio":
+        return Camera
+      case "makeup":
+        return Palette
+      case "rental":
+        return Shirt
+      default:
+        return Calendar
+    }
+  }
 
   const recentActivity = [
     {
@@ -110,56 +165,6 @@ export default function DashboardPage() {
       icon: Star,
     },
   ]
-
-  const recommendations = [
-    {
-      id: "1",
-      type: "studio",
-      name: "Studio Hoàng Gia",
-      rating: 4.8,
-      location: "Quận 3, TP.HCM",
-      image: "/placeholder.svg?height=80&width=80",
-      priceFrom: 2000000,
-      reason: "Phù hợp với sở thích của bạn",
-    },
-    {
-      id: "2",
-      type: "makeup",
-      name: "Beauty Expert Trang",
-      rating: 4.9,
-      location: "Quận 1, TP.HCM",
-      image: "/placeholder.svg?height=80&width=80",
-      priceFrom: 1200000,
-      reason: "Được đánh giá cao bởi khách hàng",
-    },
-  ]
-
-  const membershipProgress = {
-    current: "Gold",
-    next: "Platinum",
-    currentPoints: 2500,
-    nextLevelPoints: 5000,
-    progress: (2500 / 5000) * 100,
-  }
-
-  const getDateText = (date: Date) => {
-    if (isToday(date)) return "Hôm nay"
-    if (isTomorrow(date)) return "Ngày mai"
-    return format(date, "dd/MM/yyyy", { locale: vi })
-  }
-
-  const getServiceIcon = (type: string) => {
-    switch (type) {
-      case "studio":
-        return Camera
-      case "makeup":
-        return Palette
-      case "rental":
-        return Shirt
-      default:
-        return Calendar
-    }
-  }
 
   return (
     <div className="min-h-screen bg-[#EFE7DA]">

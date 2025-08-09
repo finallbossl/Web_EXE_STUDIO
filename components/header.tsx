@@ -7,7 +7,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Camera, Palette, Shirt, ChevronDown, Bell, User, Settings, LogOut, Heart, Calendar } from "lucide-react"
 import Image from "next/image"
-
 export function Header() {
   const { user, logout } = useAuth()
 
@@ -17,6 +16,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
+
   <div className="w-10 h-10 relative flex items-center justify-center overflow-hidden rounded-md">
     <Image
       src="/0a8d19ed-3e0f-44a7-b2c3-bed316cbafe5-removebg-preview.png"
@@ -29,6 +29,7 @@ export function Header() {
 </Link>
 
 
+  
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/" className="text-white hover:text-white/80 transition-colors">

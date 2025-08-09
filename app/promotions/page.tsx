@@ -1,135 +1,210 @@
 "use client"
-
 import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Gift, Calendar, MapPin, Search, Filter, Clock, Star } from "lucide-react"
+import { Clock, Filter, Search, Gift, Calendar } from "lucide-react"
+import Link from "next/link"
 import Image from "next/image"
+import { useState } from "react"
 
 export default function PromotionsPage() {
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("all")
+  const [selectedType, setSelectedType] = useState("all")
+  const [sortBy, setSortBy] = useState("newest")
+
   const promotions = [
     {
-      id: "1",
-      title: "Giảm 30% cho khách hàng mới",
-      description: "Áp dụng cho tất cả dịch vụ chụp ảnh cưới tại các studio đối tác",
-      discount: "30%",
-      validUntil: "31/03/2024",
+      id: 1,
+      title: "Giảm 50% gói chụp ảnh cưới mùa cưới 2024",
+      description: "Ưu đãi đặc biệt cho các cặp đôi đặt lịch chụp ảnh cưới trong tháng 12",
       image: "/placeholder.svg?height=200&width=300",
-      category: "studio",
-      provider: "Tất cả studio",
-      minOrder: 2000000,
-      maxDiscount: 1000000,
-      code: "NEW30",
-      used: 245,
-      total: 1000,
+      category: "Chụp ảnh cưới",
+      type: "Giảm giá",
+      discount: 50,
+      originalPrice: "10,000,000 VNĐ",
+      salePrice: "5,000,000 VNĐ",
+      validFrom: "01/12/2024",
+      validTo: "31/12/2024",
+      studio: "Golden Moment Studio",
+      studioId: 1,
+      isHot: true,
+      isExpiring: false,
+      terms: [
+        "Áp dụng cho gói chụp ảnh cưới cơ bản và cao cấp",
+        "Đặt lịch trước 15/12/2024",
+        "Thanh toán cọc 30% để giữ ưu đãi",
+        "Không áp dụng cùng các chương trình khác",
+      ],
+      usedCount: 45,
+      maxUsage: 100,
     },
     {
-      id: "2",
-      title: "Combo makeup + thuê đồ",
-      description: "Tiết kiệm đến 25% khi đặt combo makeup và thuê trang phục cùng lúc",
-      discount: "25%",
-      validUntil: "15/04/2024",
+      id: 2,
+      title: "Makeup cô dâu miễn phí khi thuê váy cưới",
+      description: "Combo hoàn hảo: Thuê váy cưới cao cấp + Makeup cô dâu chuyên nghiệp",
       image: "/placeholder.svg?height=200&width=300",
-      category: "combo",
-      provider: "Đối tác liên kết",
-      minOrder: 1500000,
-      maxDiscount: 500000,
-      code: "COMBO25",
-      used: 89,
-      total: 500,
+      category: "Combo",
+      type: "Tặng kèm",
+      discount: 0,
+      originalPrice: "3,000,000 VNĐ",
+      salePrice: "2,000,000 VNĐ",
+      validFrom: "15/11/2024",
+      validTo: "15/01/2025",
+      studio: "Royal Wedding Dress",
+      studioId: 2,
+      isHot: false,
+      isExpiring: true,
+      terms: [
+        "Áp dụng cho váy cưới từ 2 triệu trở lên",
+        "Makeup artist có kinh nghiệm 5+ năm",
+        "Bao gồm thử makeup 1 lần",
+        "Đặt lịch trước 7 ngày",
+      ],
+      usedCount: 23,
+      maxUsage: 50,
     },
     {
-      id: "3",
-      title: "Flash Sale cuối tuần",
-      description: "Giảm giá sốc cho các dịch vụ makeup trong 2 ngày cuối tuần",
-      discount: "40%",
-      validUntil: "17/03/2024",
+      id: 3,
+      title: "Giảm 30% dịch vụ quay phim sự kiện",
+      description: "Ưu đãi đặc biệt cho các sự kiện cuối năm: sinh nhật, kỷ niệm, tiệc công ty",
       image: "/placeholder.svg?height=200&width=300",
-      category: "makeup",
-      provider: "Makeup Artist Pro",
-      minOrder: 800000,
-      maxDiscount: 300000,
-      code: "FLASH40",
-      used: 156,
-      total: 200,
-      isFlash: true,
+      category: "Quay phim",
+      type: "Giảm giá",
+      discount: 30,
+      originalPrice: "8,000,000 VNĐ",
+      salePrice: "5,600,000 VNĐ",
+      validFrom: "01/11/2024",
+      validTo: "31/01/2025",
+      studio: "Creative Vision",
+      studioId: 3,
+      isHot: true,
+      isExpiring: false,
+      terms: [
+        "Áp dụng cho sự kiện từ 4 giờ trở lên",
+        "Bao gồm 1 videographer + 1 assistant",
+        "Giao video trong 7 ngày",
+        "Miễn phí 1 lần chỉnh sửa",
+      ],
+      usedCount: 12,
+      maxUsage: 30,
     },
     {
-      id: "4",
-      title: "Ưu đãi thuê áo cưới",
-      description: "Miễn phí phụ kiện khi thuê áo cưới từ 3 ngày trở lên",
-      discount: "Free",
-      validUntil: "30/04/2024",
+      id: 4,
+      title: "Mua 1 tặng 1 - Chụp ảnh gia đình",
+      description: "Chụp 1 bộ ảnh gia đình, tặng thêm 1 bộ ảnh cá nhân cho bé",
       image: "/placeholder.svg?height=200&width=300",
-      category: "rental",
-      provider: "Áo Cưới Hoàng Gia",
-      minOrder: 2000000,
-      maxDiscount: 0,
-      code: "FREEGIFT",
-      used: 67,
-      total: 300,
+      category: "Chụp ảnh gia đình",
+      type: "Mua 1 tặng 1",
+      discount: 0,
+      originalPrice: "3,000,000 VNĐ",
+      salePrice: "2,000,000 VNĐ",
+      validFrom: "01/12/2024",
+      validTo: "28/02/2025",
+      studio: "Family Portrait Studio",
+      studioId: 4,
+      isHot: false,
+      isExpiring: false,
+      terms: [
+        "Áp dụng cho gia đình có trẻ em dưới 12 tuổi",
+        "Chụp tại studio hoặc ngoại cảnh",
+        "Mỗi bộ 30-50 ảnh đã chỉnh sửa",
+        "Tặng kèm album ảnh mini",
+      ],
+      usedCount: 8,
+      maxUsage: 25,
     },
     {
-      id: "5",
-      title: "Gói chụp ảnh gia đình",
-      description: "Giảm 20% cho gói chụp ảnh gia đình từ 4 người trở lên",
-      discount: "20%",
-      validUntil: "25/03/2024",
+      id: 5,
+      title: "Flash Sale: Giảm 70% makeup dự tiệc",
+      description: "Ưu đãi có thời hạn - chỉ 3 ngày! Makeup dự tiệc chuyên nghiệp",
       image: "/placeholder.svg?height=200&width=300",
-      category: "studio",
-      provider: "Studio Gia Đình",
-      minOrder: 1200000,
-      maxDiscount: 400000,
-      code: "FAMILY20",
-      used: 123,
-      total: 400,
+      category: "Makeup",
+      type: "Flash Sale",
+      discount: 70,
+      originalPrice: "1,000,000 VNĐ",
+      salePrice: "300,000 VNĐ",
+      validFrom: "10/12/2024",
+      validTo: "12/12/2024",
+      studio: "Beauty Queen Makeup",
+      studioId: 5,
+      isHot: true,
+      isExpiring: true,
+      terms: [
+        "Chỉ áp dụng trong 3 ngày",
+        "Đặt lịch và thanh toán ngay",
+        "Không hoàn tiền khi hủy",
+        "Tối đa 2 lượt/khách hàng",
+      ],
+      usedCount: 67,
+      maxUsage: 100,
     },
     {
-      id: "6",
-      title: "Makeup dự tiệc đặc biệt",
-      description: "Tặng kèm làm nail miễn phí cho dịch vụ makeup dự tiệc",
-      discount: "Free Nail",
-      validUntil: "20/03/2024",
+      id: 6,
+      title: "Thiết kế logo + branding chỉ 1.5 triệu",
+      description: "Gói thiết kế hoàn chỉnh cho doanh nghiệp mới thành lập",
       image: "/placeholder.svg?height=200&width=300",
-      category: "makeup",
-      provider: "Beauty Salon Elite",
-      minOrder: 1000000,
-      maxDiscount: 200000,
-      code: "PARTY",
-      used: 78,
-      total: 150,
+      category: "Thiết kế",
+      type: "Gói ưu đãi",
+      discount: 40,
+      originalPrice: "2,500,000 VNĐ",
+      salePrice: "1,500,000 VNĐ",
+      validFrom: "01/11/2024",
+      validTo: "31/03/2025",
+      studio: "Art & Design Hub",
+      studioId: 6,
+      isHot: false,
+      isExpiring: false,
+      terms: [
+        "Bao gồm logo + 5 ứng dụng branding",
+        "3 lần chỉnh sửa miễn phí",
+        "Giao file trong 10 ngày làm việc",
+        "Bảo hành thiết kế 6 tháng",
+      ],
+      usedCount: 15,
+      maxUsage: 40,
     },
   ]
 
-  const categories = [
-    { value: "all", label: "Tất cả" },
-    { value: "studio", label: "Studio chụp ảnh" },
-    { value: "makeup", label: "Makeup" },
-    { value: "rental", label: "Thuê trang phục" },
-    { value: "combo", label: "Combo" },
-  ]
+  const filteredPromotions = promotions.filter((promo) => {
+    const matchesSearch =
+      promo.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      promo.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      promo.studio.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesCategory = selectedCategory === "all" || promo.category === selectedCategory
+    const matchesType = selectedType === "all" || promo.type === selectedType
 
-  const sortOptions = [
-    { value: "newest", label: "Mới nhất" },
-    { value: "ending", label: "Sắp hết hạn" },
-    { value: "discount", label: "Giảm giá cao nhất" },
-    { value: "popular", label: "Phổ biến nhất" },
-  ]
+    return matchesSearch && matchesCategory && matchesType
+  })
 
-  const getDiscountColor = (discount: string) => {
-    if (discount.includes("40")) return "bg-red-500"
-    if (discount.includes("30")) return "bg-orange-500"
-    if (discount.includes("25")) return "bg-yellow-500"
-    if (discount.includes("20")) return "bg-green-500"
-    return "bg-blue-500"
+  const sortedPromotions = [...filteredPromotions].sort((a, b) => {
+    switch (sortBy) {
+      case "newest":
+        return new Date(b.validFrom).getTime() - new Date(a.validFrom).getTime()
+      case "ending":
+        return new Date(a.validTo).getTime() - new Date(b.validTo).getTime()
+      case "discount":
+        return b.discount - a.discount
+      case "popular":
+        return b.usedCount - a.usedCount
+      default:
+        return 0
+    }
+  })
+
+  const getDiscountBadge = (promo: any) => {
+    if (promo.discount > 0) {
+      return <Badge className="bg-red-500 text-white">-{promo.discount}%</Badge>
+    }
+    return <Badge className="bg-green-500 text-white">{promo.type}</Badge>
   }
 
-  const getDaysLeft = (validUntil: string) => {
+  const calculateDaysLeft = (validTo: string) => {
     const today = new Date()
-    const endDate = new Date(validUntil.split("/").reverse().join("-"))
+    const endDate = new Date(validTo.split("/").reverse().join("-"))
     const diffTime = endDate.getTime() - today.getTime()
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
     return diffDays
@@ -232,8 +307,31 @@ export default function PromotionsPage() {
                     <Calendar className="w-3 h-3 mr-1" />
                     {getDaysLeft(promo.validUntil)} ngày
                   </Badge>
+
                 </div>
               </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {promotions
+                  .filter((p) => p.isHot)
+                  .slice(0, 3)
+                  .map((promo) => (
+                    <div key={promo.id} className="bg-white/80 p-4 rounded-lg">
+                      <h4 className="font-medium text-sm mb-2">{promo.title}</h4>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          {getDiscountBadge(promo)}
+                          <span className="text-sm text-muted-foreground">{promo.studio}</span>
+                        </div>
+                        <Button size="sm" asChild>
+                          <Link href={`/promotions/${promo.id}`}>Xem</Link>
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
               <CardContent className="p-6 bg-white text-[#6F5D4F]">
                 <h3 className="text-xl font-semibold mb-2 text-white">{promo.title}</h3>
@@ -304,8 +402,9 @@ export default function PromotionsPage() {
             <Button className="bg-[#B3907A] text-white hover:bg-[#6F5D4F]">
               Đăng ký
             </Button>
+
           </div>
-        </div>
+        )}
       </div>
     </div>
   )

@@ -338,16 +338,18 @@ export default function BookingPage() {
 
     try {
       const bookingData: BookingData = {
-        ...(studioId ? { studioId } : { makeupId }),
-        serviceId: selectedService,
-        date: date!,
-        timeSlotId: selectedTimeSlot,
-        paymentMethod,
-        depositOption,
-        promoCode: isPromoApplied ? promoCode : undefined,
-        notes,
-        customerInfo,
-      }
+  ...(studioId ? { studioId } : {}),
+  ...(makeupId ? { makeupId } : {}),
+  serviceId: selectedService,
+  date: date!,
+  timeSlotId: selectedTimeSlot,
+  paymentMethod,
+  depositOption,
+  promoCode: isPromoApplied ? promoCode : undefined,
+  notes,
+  customerInfo,
+}
+
 
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 2000))

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { use, useEffect, useState  } from "react"
 import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -34,20 +34,22 @@ import Link from "next/link"
 import { format, isAfter, isBefore } from "date-fns"
 import { vi } from "date-fns/locale"
 
-export default function StudioDetailPage({ params }: { params: { id: string } }) {
+export default function StudioDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const {id} = use(params)
   const [selectedDate, setSelectedDate] = useState<Date>()
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("")
-
-  // Mock data cho studio
-  const studioData = {
-    id: params.id,
+  const [studioData, setStudioData] = useState<any>(null)
+  
+  useEffect(()=>{
+  const data = {
+    id,
     name: "Studio Ánh Dương",
     tagline: "Chuyên gia nhiếp ảnh cưới hàng đầu",
     rating: 4.9,
     reviewCount: 127,
     completedProjects: 850,
     yearsExperience: 8,
-    location: "123 Nguyễn Huệ, Quận 1, TP.HCM",
+    location: "Nguyễn Thái Học , TP Quy Nhơn",
     phone: "0901234567",
     email: "contact@anhdương.com",
     website: "https://anhdương.com",
@@ -55,8 +57,10 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
       instagram: "@anhdương_studio",
       facebook: "AnhDuongStudio",
     },
+
     coverImage: "/anh-duong-studio-918172.jpg?height=400&width=800",
     profileImage: "/anh-duong-studio-918172.jpg?height=200&width=200",
+
     verified: true,
     premium: true,
     description: `Studio Ánh Dương được thành lập từ năm 2016 với đội ngũ nhiếp ảnh gia chuyên nghiệp và giàu kinh nghiệm. 
@@ -109,7 +113,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
         role: "Nhiếp ảnh gia chính",
         experience: "8 năm",
         specialties: ["Chụp ảnh cưới", "Portrait"],
-        avatar: "/placeholder.svg?height=80&width=80",
+        avatar: "/studio1.png?height=80&width=80",
         bio: "Nhiếp ảnh gia với hơn 8 năm kinh nghiệm, chuyên về chụp ảnh cưới và portrait",
       },
       {
@@ -118,7 +122,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
         role: "Makeup Artist",
         experience: "6 năm",
         specialties: ["Makeup cưới", "Makeup dự tiệc"],
-        avatar: "/placeholder.svg?height=80&width=80",
+        avatar: "/studio3.png?height=80&width=80",
         bio: "Makeup artist chuyên nghiệp với phong cách tự nhiên và sang trọng",
       },
       {
@@ -127,7 +131,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
         role: "Nhiếp ảnh gia phụ",
         experience: "4 năm",
         specialties: ["Chụp ảnh sự kiện", "Chụp ảnh gia đình"],
-        avatar: "/placeholder.svg?height=80&width=80",
+        avatar: "/studio2.png?height=80&width=80",
         bio: "Nhiếp ảnh gia trẻ năng động với góc nhìn sáng tạo",
       },
     ],
@@ -143,7 +147,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
     ],
 
     achievements: [
-      "Top 10 Studio chụp ảnh cưới TP.HCM 2023",
+      "Top 10 Studio chụp ảnh cưới TP.Quy Nhon 2023",
       "Giải thưởng Nhiếp ảnh xuất sắc 2022",
       "Chứng nhận ISO 9001:2015",
       "Đối tác chính thức Canon Việt Nam",
@@ -182,14 +186,14 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
     ],
 
     gallery: [
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
-      "/placeholder.svg?height=300&width=400",
+      "/studio1.png?height=300&width=400",
+      "/studio1.png?height=300&width=400",
+      "/studio1.png?height=300&width=400",
+      "/studio1.png?height=300&width=400",
+      "/studio1.png?height=300&width=400",
+      "/studio1.png?height=300&width=400",
+      "/studio1.png?height=300&width=400",
+      "/studio1.png?height=300&width=400",
     ],
 
     reviews: [
@@ -199,7 +203,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
         rating: 5,
         date: "2024-01-15",
         comment: "Dịch vụ tuyệt vời, ảnh đẹp, nhân viên nhiệt tình. Rất hài lòng với kết quả!",
-        avatar: "/placeholder.svg?height=40&width=40",
+        avatar: "/studio1.png?height=40&width=40",
         service: "Chụp ảnh cưới cao cấp",
         verified: true,
       },
@@ -209,13 +213,31 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
         rating: 4,
         date: "2024-01-10",
         comment: "Chất lượng ảnh tốt, giá cả hợp lý. Sẽ quay lại lần sau.",
-        avatar: "/placeholder.svg?height=40&width=40",
+        avatar: "/studio2.png?height=40&width=40",
         service: "Chụp ảnh gia đình",
         verified: true,
       },
     ],
   }
+ setStudioData(data)
+  }, [id])
 
+  if (!studioData) {
+    return <div className="p-4">Đang tải dữ liệu...</div>
+  }
+   const workingHours = studioData.workingHours as Record<
+    string,
+    { open: string; close: string; available: boolean }
+  >;
+  const dayLabels: Record<string, string> = {
+    monday: "Thứ 2",
+    tuesday: "Thứ 3",
+    wednesday: "Thứ 4",
+    thursday: "Thứ 5",
+    friday: "Thứ 6",
+    saturday: "Thứ 7",
+    sunday: "Chủ nhật",
+  };
   // Tạo time slots dựa trên working hours
   const generateTimeSlots = (date: Date) => {
     const dayName = format(date, "EEEE", { locale: vi }).toLowerCase()
@@ -239,7 +261,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
   // Kiểm tra slot có available không
   const isSlotAvailable = (date: Date, timeSlot: string) => {
     const dateString = format(date, "yyyy-MM-dd")
-    const bookedDay = studioData.bookedSlots.find((slot) => slot.date === dateString)
+    const bookedDay = studioData.bookedSlots.find((slot: { date: string; timeSlots: string[]; status: string }) => slot.date === dateString)
 
     if (!bookedDay) return true
     return !bookedDay.timeSlots.includes(timeSlot)
@@ -248,7 +270,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
   // Lấy trạng thái của ngày
   const getDayStatus = (date: Date) => {
     const dateString = format(date, "yyyy-MM-dd")
-    const bookedDay = studioData.bookedSlots.find((slot) => slot.date === dateString)
+    const bookedDay = studioData.bookedSlots.find((slot: { date: string; timeSlots: string[]; status: string })  => slot.date === dateString)
 
     if (!bookedDay) return "available"
 
@@ -391,7 +413,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
                           Thành tích & Chứng nhận
                         </h4>
                         <ul className="space-y-2">
-                          {studioData.achievements.map((achievement, index) => (
+                          {studioData.achievements.map((achievement : string, index :number) => (
                             <li key={index} className="flex items-center gap-2 text-sm">
                               <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
                               {achievement}
@@ -406,7 +428,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
                           Thiết bị chuyên nghiệp
                         </h4>
                         <div className="flex flex-wrap gap-2">
-                          {studioData.equipment.map((item, index) => (
+                          {studioData.equipment.map((item : string, index: number) => (
                             <Badge key={index} variant="outline" className="text-xs">
                               {item}
                             </Badge>
@@ -418,24 +440,16 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
                     <div>
                       <h4 className="font-semibold mb-3">Giờ làm việc</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {Object.entries(studioData.workingHours).map(([day, hours]) => (
-                          <div key={day} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                            <span className="font-medium capitalize">
-                              {day === "monday"
-                                ? "Thứ 2"
-                                : day === "tuesday"
-                                  ? "Thứ 3"
-                                  : day === "wednesday"
-                                    ? "Thứ 4"
-                                    : day === "thursday"
-                                      ? "Thứ 5"
-                                      : day === "friday"
-                                        ? "Thứ 6"
-                                        : day === "saturday"
-                                          ? "Thứ 7"
-                                          : "Chủ nhật"}
-                            </span>
-                            <span className={`text-sm ${hours.available ? "text-green-600" : "text-red-600"}`}>
+                        {Object.entries(workingHours).map(([day, hours]) => (
+                           <div
+                            key={day}
+                            className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
+                          >
+                            <span className="font-medium capitalize">{dayLabels[day]}</span>
+                            <span
+                              className={`text-sm ${hours.available ? "text-green-600" : "text-red-600"
+                                }`}
+                            >
                               {hours.available ? `${hours.open} - ${hours.close}` : "Nghỉ"}
                             </span>
                           </div>
@@ -448,7 +462,15 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
 
               {/* Services Tab */}
               <TabsContent value="services" className="space-y-4">
-                {studioData.services.map((service) => (
+                {studioData.services.map((service : {
+                  id: string;
+                  name: string;
+                  price: number;
+                  duration: number;
+                  description: string;
+                  includes: string[];
+                  popular: boolean;
+                }) => (
                   <Card key={service.id} className={service.popular ? "border-blue-500 border-2" : ""}>
                     <CardContent className="p-6">
                       <div className="flex justify-between items-start mb-4">
@@ -585,7 +607,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
                                         <div className="mt-2 text-sm text-gray-600">
                                           <span className="font-medium">Dịch vụ: </span>
                                           {studioData.bookedSlots
-                                            .find((booking) => booking.date === format(selectedDate, "yyyy-MM-dd"))
+                                            .find((booking: { date: string; services: string[] }) => booking.date === format(selectedDate, "yyyy-MM-dd"))
                                             ?.services.join(", ")}
                                         </div>
                                       )}
@@ -616,56 +638,80 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
                   <CardHeader>
                     <CardTitle>Lịch đã đặt sắp tới</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {studioData.bookedSlots
-                        .filter((booking) => isAfter(new Date(booking.date), new Date()))
-                        .map((booking, index) => (
-                          <div key={index} className="p-4 border rounded-lg">
-                            <div className="flex items-center justify-between mb-2">
-                              <div className="flex items-center gap-3">
-                                <CalendarIcon className="w-5 h-5 text-blue-600" />
-                                <span className="font-medium">
-                                  {format(new Date(booking.date), "EEEE, dd/MM/yyyy", { locale: vi })}
-                                </span>
-                              </div>
-                              <Badge
-                                className={
-                                  booking.status === "confirmed"
-                                    ? "bg-green-600"
-                                    : booking.status === "pending"
-                                      ? "bg-yellow-600"
-                                      : "bg-gray-600"
-                                }
-                              >
-                                {booking.status === "confirmed"
-                                  ? "Đã xác nhận"
-                                  : booking.status === "pending"
-                                    ? "Chờ xác nhận"
-                                    : "Đã hủy"}
-                              </Badge>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                              <div>
-                                <span className="font-medium">Khung giờ: </span>
-                                {booking.timeSlots.join(", ")}
-                              </div>
-                              <div>
-                                <span className="font-medium">Dịch vụ: </span>
-                                {booking.services.join(", ")}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </CardContent>
+                 <CardContent>
+  <div className="space-y-4">
+    {studioData.bookedSlots
+      .filter((booking: {
+        date: string;
+        services: string[];
+        status: string;
+      }) => isAfter(new Date(booking.date), new Date()))
+      .map(
+        (
+          booking: {
+            date: string;
+            services: string[];
+            status: string;
+            timeSlots: string[];
+          },
+          index: number
+        ) => (
+          <div key={index} className="p-4 border rounded-lg">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-3">
+                <CalendarIcon className="w-5 h-5 text-blue-600" />
+                <span className="font-medium">
+                  {format(new Date(booking.date), "EEEE, dd/MM/yyyy", { locale: vi })}
+                </span>
+              </div>
+              <Badge
+                className={
+                  booking.status === "confirmed"
+                    ? "bg-green-600"
+                    : booking.status === "pending"
+                    ? "bg-yellow-600"
+                    : "bg-gray-600"
+                }
+              >
+                {booking.status === "confirmed"
+                  ? "Đã xác nhận"
+                  : booking.status === "pending"
+                  ? "Chờ xác nhận"
+                  : "Đã hủy"}
+              </Badge>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="font-medium">Khung giờ: </span>
+                {booking.timeSlots?.join(", ") ?? "Không có"}
+              </div>
+              <div>
+                <span className="font-medium">Dịch vụ: </span>
+                {booking.services.join(", ")}
+              </div>
+            </div>
+          </div>
+        )
+      )}
+  </div>
+</CardContent>
+
                 </Card>
               </TabsContent>
 
               {/* Team Tab */}
               <TabsContent value="team" className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {studioData.team.map((member) => (
+                  {studioData.team.map((member :{
+                    id:string 
+                    avatar: string 
+                    name : string 
+                    role: string
+                    bio: string 
+                    experience: string 
+                    specialties:any
+
+                  }) => (
                     <Card key={member.id}>
                       <CardContent className="p-6">
                         <div className="flex items-start gap-4">
@@ -685,7 +731,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
                               <div>
                                 <span className="text-sm font-medium">Chuyên môn: </span>
                                 <div className="flex flex-wrap gap-1 mt-1">
-                                  {member.specialties.map((specialty, index) => (
+                                  {member.specialties.map((specialty :string , index : number) => (
                                     <Badge key={index} variant="outline" className="text-xs">
                                       {specialty}
                                     </Badge>
@@ -704,7 +750,7 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
               {/* Gallery Tab */}
               <TabsContent value="gallery">
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {studioData.gallery.map((image, index) => (
+                  {studioData.gallery.map((image: string , index: number) => (
                     <div key={index} className="relative aspect-square group cursor-pointer">
                       <Image
                         src={image || "/placeholder.svg"}
@@ -720,7 +766,16 @@ export default function StudioDetailPage({ params }: { params: { id: string } })
 
               {/* Reviews Tab */}
               <TabsContent value="reviews" className="space-y-4">
-                {studioData.reviews.map((review) => (
+                {studioData.reviews.map((review :{
+                  id: string
+                  customerName: string
+                  rating: number
+                  date: string
+                  comment: string
+                  avatar: string
+                  service: string
+                  verified: boolean
+                }) => (
                   <Card key={review.id}>
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">

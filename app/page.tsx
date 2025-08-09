@@ -1,11 +1,12 @@
 "use client"
-
 import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
+
 import HeroBanner from "@/components/HeroBanner"
+
 import {
   Camera,
   Palette,
@@ -29,39 +30,42 @@ export default function HomePage() {
   const featuredServices = [
     {
       id: "1",
-      name: "Studio Ánh Dương",
+      name: "Studio Biển Xanh",
       type: "studio",
       rating: 4.9,
       reviews: 127,
       location: "Quận 1, TP.HCM",
       price: "2,000,000",
       image: "/anh-duong-studio-918172.jpg?height=200&width=300",
+
       verified: true,
-      specialties: ["Chụp ảnh cưới", "Gia đình"],
+      specialties: ["Chụp ảnh cưới", "Chụp ảnh biển"],
     },
     {
       id: "2",
-      name: "Makeup Artist Linh",
+      name: "Makeup Artist Hồng Nhung",
       type: "makeup",
       rating: 4.8,
       reviews: 89,
       location: "Quận 3, TP.HCM",
       price: "800,000",
       image: "/bg4z.jpg?height=200&width=300",
+
       verified: true,
-      specialties: ["Makeup cưới", "Makeup dự tiệc"],
+      specialties: ["Makeup cô dâu", "Makeup dạ tiệc"],
     },
     {
       id: "3",
-      name: "Thuê Áo Cưới Hoàng Gia",
+      name: "Áo Cưới Thanh Thảo",
       type: "rental",
       rating: 4.7,
       reviews: 156,
       location: "Quận 7, TP.HCM",
       price: "1,500,000",
       image: "/ee9ac0b5e6bd00e359ac-600x759-1.jpg?height=200&width=300",
+
       verified: true,
-      specialties: ["Áo cưới", "Vest nam"],
+      specialties: ["Áo cưới cao cấp", "Vest cưới"],
     },
   ]
 
@@ -73,6 +77,7 @@ export default function HomePage() {
       discount: "20%",
       validUntil: "31/03/2024",
       image: "/vay-cuoi-cong-chua-hoang-gia-1.png?height=150&width=250",
+
     },
     {
       id: "2",
@@ -81,14 +86,15 @@ export default function HomePage() {
       discount: "25%",
       validUntil: "15/04/2024",
       image: "/bang-gia-cho-thue-vay-cuoi.jpg?height=150&width=250",
+
     },
   ]
 
   const stats = [
-    { label: "Nhà cung cấp", value: "500+", icon: Users },
-    { label: "Khách hàng hài lòng", value: "10,000+", icon: Award },
-    { label: "Dự án hoàn thành", value: "25,000+", icon: Camera },
-    { label: "Đánh giá 5 sao", value: "95%", icon: Star },
+    { label: "Nhà cung cấp", value: "10+", icon: Users },
+    { label: "Khách hàng hài lòng", value: "1000+", icon: Award },
+    { label: "Dự án hoàn thành", value: "1000+", icon: Camera },
+    { label: "Đánh giá 5 sao", value: "%", icon: Star },
   ]
 
   return (
@@ -97,6 +103,7 @@ export default function HomePage() {
 
       {/* Hero Section */}
        <HeroBanner/>
+
 
   <div className="container mx-auto px-4 text-center"></div>
      {/* Stats Section */}
@@ -336,6 +343,7 @@ export default function HomePage() {
             <Camera className="w-5 h-5 text-white" />
           </div>
           <span className="text-xl font-bold text-[#6F5D4F]">BookingHub</span>
+
         </div>
         <p className="text-sm text-[#6F5D4F]/80">
           Nền tảng kết nối khách hàng với các dịch vụ chụp ảnh, makeup và thuê trang phục chuyên nghiệp.
