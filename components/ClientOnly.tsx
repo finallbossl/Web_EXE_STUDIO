@@ -1,16 +1,18 @@
+"use client"
 
-"use client";
+import { useHydration } from "@/hooks/useHydration"
 
-import { useEffect, useState } from "react";
+interface ClientOnlyProps {
+  children: React.ReactNode
+  fallback?: React.ReactNode
+}
 
-export default function ClientOnly({ children }: { children: React.ReactNode }) {
-  const [isClient, setIsClient] = useState(false);
+export default function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
+  const isHydrated = useHydration()
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  if (!isHydrated) {
+    return <>{fallback}</>
+  }
 
-  if (!isClient) return null;
-
-  return <>{children}</>;
+  return <>{children}</>
 }

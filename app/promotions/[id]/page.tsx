@@ -1,3 +1,4 @@
+import { use } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -6,8 +7,9 @@ import { CheckCircle, Clock, Gift, Calendar, ArrowLeft, Share2, Heart } from "lu
 import Link from "next/link"
 import Image from "next/image"
 
-export default function PromotionDetailPage({ params }: { params: { id: string } }) {
-  // Mock data - in real app, fetch based on params.id
+export default function PromotionDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  // Mock data - in real app, fetch based on id
   const promotion = {
     id: 1,
     title: "Giảm 50% gói chụp ảnh cưới mùa cưới 2024",

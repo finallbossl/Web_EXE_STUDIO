@@ -16,6 +16,41 @@ export default function PromotionsPage() {
   const [selectedType, setSelectedType] = useState("all")
   const [sortBy, setSortBy] = useState("newest")
 
+  // Define categories for filtering
+  const categories = [
+    { value: "all", label: "Tất cả danh mục" },
+    { value: "Chụp ảnh cưới", label: "Chụp ảnh cưới" },
+    { value: "Combo", label: "Combo" },
+    { value: "Quay phim", label: "Quay phim" },
+    { value: "Chụp ảnh gia đình", label: "Chụp ảnh gia đình" },
+    { value: "Makeup", label: "Makeup" },
+    { value: "Thiết kế", label: "Thiết kế" },
+  ]
+
+  // Define sort options
+  const sortOptions = [
+    { value: "newest", label: "Mới nhất" },
+    { value: "ending", label: "Sắp hết hạn" },
+    { value: "discount", label: "Giảm giá cao nhất" },
+    { value: "popular", label: "Phổ biến nhất" },
+  ]
+
+  // Function to get discount color
+  const getDiscountColor = (discount: number) => {
+    if (discount >= 50) return "bg-red-600"
+    if (discount >= 30) return "bg-orange-500"
+    return "bg-yellow-500"
+  }
+
+  // Function to calculate days left
+  const getDaysLeft = (validTo: string) => {
+    const today = new Date()
+    const endDate = new Date(validTo.split("/").reverse().join("-"))
+    const diffTime = endDate.getTime() - today.getTime()
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    return diffDays > 0 ? diffDays : 0
+  }
+
   const promotions = [
     {
       id: 1,
@@ -282,9 +317,9 @@ export default function PromotionsPage() {
                 <div className="absolute top-2 left-2 flex gap-2">
                   <Badge className={`${getDiscountColor(promo.discount)} text-white`}>
                     <Gift className="w-3 h-3 mr-1" />
-                    {promo.discount}
+                    {promo.discount > 0 ? `-${promo.discount}%` : promo.type}
                   </Badge>
-                  {promo.isFlash && (
+                  {promo.type === "Flash Sale" && (
                     <Badge className="bg-red-600 text-white animate-pulse">
                       <Clock className="w-3 h-3 mr-1" />
                       Flash Sale
@@ -293,89 +328,59 @@ export default function PromotionsPage() {
                 </div>
                 <div className="absolute top-2 right-2">
                   <Badge variant="secondary" className="bg-white/20 text-white">
-                    {promo.category === "studio"
-                      ? "Studio"
-                      : promo.category === "makeup"
-                        ? "Makeup"
-                        : promo.category === "rental"
-                          ? "Thuê đồ"
-                          : "Combo"}
+                    {promo.category}
                   </Badge>
                 </div>
                 <div className="absolute bottom-2 right-2">
                   <Badge className="bg-[#6F5D4F]/30 text-white">
                     <Calendar className="w-3 h-3 mr-1" />
-                    {getDaysLeft(promo.validUntil)} ngày
+                    {getDaysLeft(promo.validTo)} ngày
                   </Badge>
-
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {promotions
-                  .filter((p) => p.isHot)
-                  .slice(0, 3)
-                  .map((promo) => (
-                    <div key={promo.id} className="bg-white/80 p-4 rounded-lg">
-                      <h4 className="font-medium text-sm mb-2">{promo.title}</h4>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          {getDiscountBadge(promo)}
-                          <span className="text-sm text-muted-foreground">{promo.studio}</span>
-                        </div>
-                        <Button size="sm" asChild>
-                          <Link href={`/promotions/${promo.id}`}>Xem</Link>
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
+              
               <CardContent className="p-6 bg-white text-[#6F5D4F]">
-                <h3 className="text-xl font-semibold mb-2 text-white">{promo.title}</h3>
+                <h3 className="text-xl font-semibold mb-2">{promo.title}</h3>
                 <p className="text-[#6F5D4F]/70 text-sm mb-4 line-clamp-2">{promo.description}</p>
 
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center gap-2 text-sm text-[#6F5D4F]/70">
-                    <MapPin className="w-4 h-4" />
-                    <span className="text-white">{promo.provider}</span>
+                    <span className="text-[#6F5D4F] font-medium">{promo.studio}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-[#6F5D4F]/70">
-                    <Star className="w-4 h-4" />
-                    <span className="text-white">Đơn tối thiểu: {promo.minOrder.toLocaleString()}đ</span>
+                    <span className="text-[#6F5D4F]">Hiệu lực: {promo.validFrom} - {promo.validTo}</span>
                   </div>
                 </div>
 
                 {/* Usage Progress */}
                 <div className="mb-4">
                   <div className="flex justify-between text-sm text-[#6F5D4F]/70 mb-1">
-                    <span >Đã sử dụng</span>
-                    <span >
-                      {promo.used}/{promo.total}
+                    <span>Đã sử dụng</span>
+                    <span>
+                      {promo.usedCount}/{promo.maxUsage}
                     </span>
                   </div>
                   <div className="w-full bg-[#EFE7DA] rounded-full h-2">
                     <div
                       className="bg-[#B3907A] h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${(promo.used / promo.total) * 100}%` }}
+                      style={{ width: `${(promo.usedCount / promo.maxUsage) * 100}%` }}
                     ></div>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <div className="text-center">
-                    <div className="text-xs text-[#6F5D4F]/70">Mã giảm giá</div>
-                    <div className="font-mono font-bold bg-[#EFE7DA] text-[#6F5D4F] px-2 py-1 rounded text-sm">
-                      {promo.code}
+                  <div>
+                    <div className="text-lg font-bold text-[#6F5D4F]">
+                      {promo.salePrice}đ
+                      {promo.originalPrice && (
+                        <span className="text-sm line-through text-[#6F5D4F]/50 ml-2">
+                          {promo.originalPrice}
+                        </span>
+                      )}
                     </div>
                   </div>
-                  <Button
-                    size="sm"
-                    className="bg-[#6F5D4F]/80 text-white hover:bg-[#5c4b3f]"
-                  >
-                    Sử dụng ngay
+                  <Button asChild size="sm" className="bg-[#6F5D4F] text-white hover:bg-[#5c4b3f]">
+                    <Link href={`/promotions/${promo.id}`}>Xem chi tiết</Link>
                   </Button>
                 </div>
               </CardContent>
@@ -402,9 +407,8 @@ export default function PromotionsPage() {
             <Button className="bg-[#B3907A] text-white hover:bg-[#6F5D4F]">
               Đăng ký
             </Button>
-
           </div>
-        )}
+        </div>
       </div>
     </div>
   )

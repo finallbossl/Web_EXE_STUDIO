@@ -439,7 +439,7 @@ export default function ProfilePage() {
 
                           <div className="flex gap-2">
                             <Button variant="outline" size="sm" asChild>
-                              <Link href={`/${booking.type}/${booking.id}`}>Chi tiết</Link>
+                              <Link href={`/${booking.type === 'studio' ? 'studios' : booking.type === 'makeup' ? 'makeup' : 'rental'}/${booking.id}`}>Chi tiết</Link>
                             </Button>
                             {booking.status === "confirmed" && (
                               <Button variant="outline" size="sm">
@@ -489,7 +489,7 @@ export default function ProfilePage() {
                               </span>
                               <div className="flex gap-2">
                                 <Button variant="outline" size="sm" asChild>
-                                  <Link href={`/${favorite.type}/${favorite.id}`}>Xem</Link>
+                                  <Link href={`/${favorite.type === 'studio' ? 'studios' : favorite.type === 'makeup' ? 'makeup' : 'rental'}/${favorite.id}`}>Xem</Link>
                                 </Button>
                                 <Button variant="ghost" size="sm">
                                   <Heart className="w-4 h-4 fill-red-500 text-red-500" />

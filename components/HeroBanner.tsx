@@ -1,4 +1,6 @@
+"use client"
 import { useEffect, useState } from "react";
+import { useHydration } from "@/hooks/useHydration";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, Camera, Palette, Shirt } from "lucide-react";
@@ -15,48 +17,51 @@ const imageUrls = [
 
 export default function HeroBanner() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const isHydrated = useHydration();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % imageUrls.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+    if (isHydrated) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % imageUrls.length);
+      }, 5000);
+      
+      return () => clearInterval(interval);
+    }
+  }, [isHydrated]);
 
   return (
     <section
-  className="relative h-[90vh] w-full bg-cover bg-center transition-all duration-1000"
-  style={{ backgroundImage: `url(${imageUrls[currentImageIndex]})` }}
->
+      className="relative h-[90vh] w-full bg-cover bg-center transition-all duration-1000"
+      style={{ backgroundImage: `url(${imageUrls[currentImageIndex]})` }}
+    >
       {/* Overlay để text nổi hơn trên ảnh */}
       <div className="absolute inset-0 bg-[#EFE7DA]/20 z-0" />
 
-     {/* Nội dung */}
-<div className="relative z-10 h-full flex items-center justify-center px-4">
-  <div className="max-w-screen-xl w-full text-center">
+      {/* Nội dung */}
+      <div className="relative z-10 h-full flex items-center justify-center px-4">
+        <div className="max-w-screen-xl w-full text-center">
+          <h1
+            className="text-[clamp(24px,5vw,72px)] font-semibold mb-6 text-[#3C2C1E]
+              drop-shadow-[0_6px_8px_rgba(0,0,0,0.25)]
+              transition-all duration-300 ease-in-out
+              hover:scale-[1.02] hover:-translate-y-1"
+            style={{ fontFamily: 'TQ-Kingston' }}
+          >
+            Kết nối bạn <br className="block md:hidden" />
+            với những dịch vụ tốt nhất<br className="hidden md:block" />
+          </h1>
 
-    <h1
-  className="text-[clamp(24px,5vw,72px)] font-semibold mb-6 text-[#3C2C1E]
-    drop-shadow-[0_6px_8px_rgba(0,0,0,0.25)]
-    transition-all duration-300 ease-in-out
-    hover:scale-[1.02] hover:-translate-y-1"
-  style={{ fontFamily: 'TQ-Kingston' }}
->
-  Kết nối bạn <br className="block md:hidden" />
-  với những dịch vụ tốt nhất<br className="hidden md:block" />
-</h1>
-
-<p
-  className="text-[clamp(18px,4vw,32px)] font-medium text-[#3C2C1E]/90
-    max-w-[90%] md:max-w-[800px] mx-auto text-center leading-snug
-    drop-shadow-[0_3px_6px_rgba(0,0,0,0.2)]
-    transition-all duration-300 ease-in-out
-    hover:scale-[1.01] hover:-translate-y-0.5"
-  style={{ fontFamily: 'Simplesnails' }}
->
-  Studio chụp ảnh, makeup artist và thuê trang phục chuyên nghiệp <br className="hidden md:inline" />
-  cho mọi sự kiện đặc biệt của bạn
-</p>
+          <p
+            className="text-[clamp(18px,4vw,32px)] font-medium text-[#3C2C1E]/90
+              max-w-[90%] md:max-w-[800px] mx-auto text-center leading-snug
+              drop-shadow-[0_3px_6px_rgba(0,0,0,0.2)]
+              transition-all duration-300 ease-in-out
+              hover:scale-[1.01] hover:-translate-y-0.5"
+            style={{ fontFamily: 'Simplesnails' }}
+          >
+            Studio chụp ảnh, makeup artist và thuê trang phục chuyên nghiệp <br className="hidden md:inline" />
+            cho mọi sự kiện đặc biệt của bạn
+          </p>
 
           <div className="max-w-2xl mx-auto bg-[#F5F5EB] rounded-lg p-2 flex items-center shadow">
             <Input

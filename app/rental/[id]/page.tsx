@@ -32,7 +32,7 @@ import Link from "next/link"
 import { format } from "date-fns"
 import { promises } from "dns"
 
-export default function RentalDetailPage({ params }: { params: Promise<{ id: string }> })  {
+export default function RentalDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
   const [selectedDate, setSelectedDate] = useState<Date>()
   const [rentalData, setRentalData] = useState<any>(null)
@@ -403,15 +403,13 @@ export default function RentalDetailPage({ params }: { params: Promise<{ id: str
 
               {/* Categories Tab */}
               <TabsContent value="categories" className="space-y-4">
-                {rentalData.categories.map((category:{
-                  id :string
-                  popular :string
-                  name :string 
-                  description: string 
-                  itemCount : number
-                  priceRange : [string, string]
-
-
+                {rentalData.categories.map((category: {
+                  id: string;
+                  popular: boolean;
+                  name: string;
+                  description: string;
+                  itemCount: number;
+                  priceRange: [number, number];
                 }) => (
                   <Card key={category.id} className={category.popular ? "border-purple-500 border-2" : ""}>
                     <CardContent className="p-6">

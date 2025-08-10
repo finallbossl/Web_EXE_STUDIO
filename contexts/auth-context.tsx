@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
+import { useHydration } from "@/hooks/useHydration"
 
 interface User {
   id: string
@@ -16,7 +17,7 @@ interface User {
   joinDate: string
   verified: boolean
   membershipLevel: "Bronze" | "Silver" | "Gold" | "Platinum"
-  role?: "admin" | "user" // 👈 Thêm dòng này
+  role?: "admin" | "user"
 }
 
 interface AuthContextType {
@@ -32,7 +33,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const isHydrated = useHydration()
 
   const mockUser: User = {
     id: "1",
@@ -50,25 +52,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("user")
-    if (savedUser) {
+    if (isHydrated) {
       try {
-        const parsedUser = JSON.parse(savedUser)
-        setUser(parsedUser)
+        const savedUser = localStorage.getItem("user")
+        if (savedUser) {
+          const parsedUser = JSON.parse(savedUser)
+          setUser(parsedUser)
+        }
       } catch (error) {
         console.error("Lỗi parse user từ localStorage:", error)
         localStorage.removeItem("user")
       }
     }
-    setIsLoading(false)
-  }, [])
+  }, [isHydrated])
 
   const login = async (email: string, password: string) => {
     setIsLoading(true)
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000))
       setUser(mockUser)
-      localStorage.setItem("user", JSON.stringify(mockUser))
+      if (isHydrated) {
+        localStorage.setItem("user", JSON.stringify(mockUser))
+      }
     } catch (error) {
       console.error("Đăng nhập lỗi:", error)
       throw new Error("Đăng nhập thất bại")
@@ -92,7 +97,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       setUser(newUser)
-      localStorage.setItem("user", JSON.stringify(newUser))
+      if (isHydrated) {
+        localStorage.setItem("user", JSON.stringify(newUser))
+      }
     } catch (error) {
       console.error("Đăng ký lỗi:", error)
       throw new Error("Đăng ký thất bại")
@@ -103,7 +110,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = () => {
     setUser(null)
-    localStorage.removeItem("user")
+    if (isHydrated) {
+      localStorage.removeItem("user")
+    }
   }
 
   const updateProfile = async (userData: Partial<User>) => {
@@ -113,7 +122,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await new Promise((resolve) => setTimeout(resolve, 500))
       const updatedUser = { ...user, ...userData }
       setUser(updatedUser)
-      localStorage.setItem("user", JSON.stringify(updatedUser))
+      if (isHydrated) {
+        localStorage.setItem("user", JSON.stringify(updatedUser))
+      }
     } catch (error) {
       console.error("Cập nhật hồ sơ lỗi:", error)
       throw new Error("Cập nhật thất bại")
