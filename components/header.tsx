@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Camera, Palette, Shirt, ChevronDown, Bell, User, Settings, LogOut, Heart, Calendar } from "lucide-react"
 import Image from "next/image"
+import ClientOnly from "@/components/ClientOnly"
 
 export function Header() {
   const { user, logout } = useAuth()
@@ -41,33 +42,26 @@ export function Header() {
               Trang chủ
             </Link>
 
-            {isHydrated ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center space-x-1 nav-link">
-                  <span>Dịch vụ</span>
-                  <ChevronDown className="w-4 h-4 transition-transform group-data-[state=open]:rotate-180" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 glass-card border-white/20 rounded-xl shadow-xl">
-                  {[
-                    { href: "/studios", icon: Camera, label: "Studio chụp ảnh" },
-                    { href: "/makeup", icon: Palette, label: "Makeup & Trang điểm" },
-                    { href: "/rental", icon: Shirt, label: "Thuê trang phục" },
-                  ].map((item) => (
-                    <DropdownMenuItem asChild key={item.href}>
-                      <Link href={item.href} className="dropdown-item">
-                        <item.icon className="w-4 h-4" />
-                        <span>{item.label}</span>
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <div className="flex items-center space-x-1 nav-link">
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center space-x-1 nav-link">
                 <span>Dịch vụ</span>
-                <ChevronDown className="w-4 h-4" />
-              </div>
-            )}
+                <ChevronDown className="w-4 h-4 transition-transform group-data-[state=open]:rotate-180" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 glass-card border-white/20 rounded-xl shadow-xl">
+                {[
+                  { href: "/studios", icon: Camera, label: "Studio chụp ảnh" },
+                  { href: "/makeup", icon: Palette, label: "Makeup & Trang điểm" },
+                  { href: "/rental", icon: Shirt, label: "Thuê trang phục" },
+                ].map((item) => (
+                  <DropdownMenuItem asChild key={item.href}>
+                    <Link href={item.href} className="dropdown-item">
+                      <item.icon className="w-4 h-4" />
+                      <span>{item.label}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             <Link href="/promotions" className="nav-link">
               Ưu đãi
@@ -78,60 +72,71 @@ export function Header() {
           </nav>
 
           {/* User Actions */}
-          <div className="flex items-center space-x-4">
-            {isHydrated && user ? (
-              <>
-                <Button variant="ghost" size="sm" className="icon-btn">
-                  <Bell className="w-4 h-4" />
-                </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="flex items-center space-x-2 hover:opacity-90 transition-opacity">
-                    <Avatar className="w-8 h-8 border border-white/20 hover:border-white/40 transition-all">
-                      <AvatarImage src={user.avatar || "/placeholder.svg?height=32&width=32"} />
-                      <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div className="hidden md:block text-left">
-                      <div className="text-sm font-medium text-white">{user.name}</div>
-                      <Badge variant="secondary" className="text-xs bg-gradient-to-r from-yellow-400 to-orange-500">
-                        {user.membershipLevel}
-                      </Badge>
-                    </div>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56 glass-card border-white/20 rounded-xl shadow-xl">
-                    {[
-                      { href: "/profile", icon: User, label: "Hồ sơ cá nhân" },
-                      { href: "/bookings", icon: Calendar, label: "Lịch đã đặt" },
-                      { href: "/favorites", icon: Heart, label: "Yêu thích" },
-                      { href: "/settings", icon: Settings, label: "Cài đặt" },
-                    ].map((item) => (
-                      <DropdownMenuItem asChild key={item.href}>
-                        <Link href={item.href} className="dropdown-item">
-                          <item.icon className="w-4 h-4" />
-                          <span>{item.label}</span>
-                        </Link>
+          <ClientOnly fallback={
+            <div className="flex items-center space-x-2">
+              <Button variant="ghost" className="nav-btn" asChild>
+                <Link href="/login">Đăng nhập</Link>
+              </Button>
+              <Button className="bg-gradient-button hover:opacity-90" asChild>
+                <Link href="/register">Đăng ký</Link>
+              </Button>
+            </div>
+          }>
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <>
+                  <Button variant="ghost" size="sm" className="icon-btn">
+                    <Bell className="w-4 h-4" />
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex items-center space-x-2 hover:opacity-90 transition-opacity">
+                      <Avatar className="w-8 h-8 border border-white/20 hover:border-white/40 transition-all">
+                        <AvatarImage src={user.avatar || "/placeholder.svg?height=32&width=32"} />
+                        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div className="hidden md:block text-left">
+                        <div className="text-sm font-medium text-white">{user.name}</div>
+                        <Badge variant="secondary" className="text-xs bg-gradient-to-r from-yellow-400 to-orange-500">
+                          {user.membershipLevel}
+                        </Badge>
+                      </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56 glass-card border-white/20 rounded-xl shadow-xl">
+                      {[
+                        { href: "/profile", icon: User, label: "Hồ sơ cá nhân" },
+                        { href: "/bookings", icon: Calendar, label: "Lịch đã đặt" },
+                        { href: "/favorites", icon: Heart, label: "Yêu thích" },
+                        { href: "/settings", icon: Settings, label: "Cài đặt" },
+                      ].map((item) => (
+                        <DropdownMenuItem asChild key={item.href}>
+                          <Link href={item.href} className="dropdown-item">
+                            <item.icon className="w-4 h-4" />
+                            <span>{item.label}</span>
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                      <DropdownMenuItem
+                        onSelect={logout}
+                        className="dropdown-item text-red-400 hover:text-red-300"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Đăng xuất</span>
                       </DropdownMenuItem>
-                    ))}
-                    <DropdownMenuItem
-                      onSelect={logout}
-                      className="dropdown-item text-red-400 hover:text-red-300"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span>Đăng xuất</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Button variant="ghost" className="nav-btn" asChild>
-                  <Link href="/login">Đăng nhập</Link>
-                </Button>
-                <Button className="bg-gradient-button hover:opacity-90" asChild>
-                  <Link href="/register">Đăng ký</Link>
-                </Button>
-              </div>
-            )}
-          </div>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <Button variant="ghost" className="nav-btn" asChild>
+                    <Link href="/login">Đăng nhập</Link>
+                  </Button>
+                  <Button className="bg-gradient-button hover:opacity-90" asChild>
+                    <Link href="/register">Đăng ký</Link>
+                  </Button>
+                </div>
+              )}
+            </div>
+          </ClientOnly>
         </div>
       </div>
 

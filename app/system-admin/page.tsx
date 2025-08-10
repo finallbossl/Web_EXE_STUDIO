@@ -45,8 +45,24 @@ import { ReviewManagement } from "@/components/admin/review-management"
 import { MarketingTools } from "@/components/admin/marketing-tools"
 import { SecuritySettings } from "@/components/admin/security-settings"
 import { AuditLogs } from "@/components/admin/audit-logs"
+import NoSSR from "@/components/NoSSR"
 
 export default function SystemAdminDashboard() {
+  return (
+    <NoSSR fallback={
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 text-lg">Đang tải System Admin...</p>
+        </div>
+      </div>
+    }>
+      <SystemAdminContent />
+    </NoSSR>
+  )
+}
+
+function SystemAdminContent() {
   const [selectedTab, setSelectedTab] = useState("overview")
 
   const sidebarItems = [

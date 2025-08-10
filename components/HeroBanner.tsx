@@ -32,7 +32,9 @@ export default function HeroBanner() {
   return (
     <section
       className="relative h-[90vh] w-full bg-cover bg-center transition-all duration-1000"
-      style={{ backgroundImage: `url(${imageUrls[currentImageIndex]})` }}
+      style={{ 
+        backgroundImage: isHydrated ? `url(${imageUrls[currentImageIndex]})` : `url(${imageUrls[0]})` 
+      }}
     >
       {/* Overlay để text nổi hơn trên ảnh */}
       <div className="absolute inset-0 bg-[#EFE7DA]/20 z-0" />

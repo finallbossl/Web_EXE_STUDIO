@@ -65,7 +65,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    background: linear-gradient(135deg, #be185d 0%, #7c3aed 50%, #0891b2 100%);
+    background-color: #F5F1EB;
     min-height: 100vh;
     color: black;
   }
@@ -137,15 +137,15 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: #EFE7DA;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #be185d, #7c3aed, #0891b2);
+  background: #C1B6A3;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #a21650, #6d28d9, #0e7490);
+  background: #B3907A;
 }

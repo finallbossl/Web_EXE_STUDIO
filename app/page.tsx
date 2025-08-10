@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import ClientOnly from "@/components/ClientOnly"
 import HeroBanner from "@/components/HeroBanner"
 
 import {
@@ -93,15 +92,7 @@ export default function HomePage() {
   ]
 
   return (
-    <ClientOnly fallback={
-      <div className="min-h-screen bg-[#F5F1EB] flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#6F5D4F] mx-auto mb-4"></div>
-          <p className="text-[#6F5D4F] text-lg">Đang tải...</p>
-        </div>
-      </div>
-    }>
-      <div className="min-h-screen bg-[#F5F1EB]">
+    <div className="min-h-screen bg-[#F5F1EB]">
         <Header />
 
         {/* Hero Section */}
@@ -307,7 +298,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-4 text-[#6F5D4F]">Bạn là nhà cung cấp dịch vụ?</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto text-[#6F5D4F]/80">
-              Tham gia nền t���ng của chúng tôi để tiếp cận hàng nghìn khách hàng tiềm năng
+              Tham gia nền tảng của chúng tôi để tiếp cận hàng nghìn khách hàng tiềm năng
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -338,8 +329,12 @@ export default function HomePage() {
                   <div className="w-8 h-8 bg-[#B3907A] rounded-lg flex items-center justify-center">
                     <Camera className="w-5 h-5 text-white" />
                   </div>
-                  <span className="text-xl font-bold text-[#6F5D4F]">BookingHub</span>
-                </div>
+              <span
+              className="text-[40px] md:text-[30px] font-bold gradient-text leading-none group-hover:opacity-90 transition-opacity"
+              style={{ fontFamily: "Simplesnails" }}
+            >
+              DepStudio
+            </span>                </div>
                 <p className="text-sm text-[#6F5D4F]/80">
                   Nền tảng kết nối khách hàng với các dịch vụ chụp ảnh, makeup và thuê trang phục chuyên nghiệp.
                 </p>
@@ -384,20 +379,19 @@ export default function HomePage() {
               <div>
                 <h3 className="text-lg font-semibold mb-4">Kết nối</h3>
                 <ul className="space-y-2 text-[#6F5D4F]/80 text-sm">
-                  <li>Email: support@bookinghub.vn</li>
+                  <li>Email: support@DepStudio.vn</li>
                   <li>Hotline: 1900 1234</li>
-                  <li>Địa chỉ: 123 Nguyễn Huệ, Q1, TP.HCM</li>
+                  <li>Địa chỉ: Dai hoc FPT QUY NHON</li>
                 </ul>
               </div>
             </div>
 
             {/* Copyright */}
             <div className="border-t border-[#C1B6A3] mt-8 pt-6 text-center text-sm text-[#6F5D4F]/70">
-              <p>&copy; 2024 BookingHub. Tất cả quyền được bảo lưu.</p>
+              <p>&copy; 2025 DepStudio. Tất cả quyền được bảo lưu.</p>
             </div>
           </div>
         </footer>
-      </div>
-    </ClientOnly>
+    </div>
   )
 }

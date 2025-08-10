@@ -41,8 +41,24 @@ import { AnalyticsDashboard } from "@/components/analytics/analytics-dashboard"
 import { InventoryManagement } from "@/components/inventory/inventory-management"
 import { StaffManagement } from "@/components/staff/staff-management"
 import { NotificationButton } from "@/components/notifications/notification-button"
+import NoSSR from "@/components/NoSSR"
 
 export default function ShopOwnerDashboard() {
+  return (
+    <NoSSR fallback={
+      <div className="min-h-screen bg-[#F5F1EB] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#6F5D4F] mx-auto mb-4"></div>
+          <p className="text-[#6F5D4F] text-lg">Đang tải Shop Owner Dashboard...</p>
+        </div>
+      </div>
+    }>
+      <ShopOwnerContent />
+    </NoSSR>
+  )
+}
+
+function ShopOwnerContent() {
   const [selectedTab, setSelectedTab] = useState("overview")
 
   // Mock data
@@ -100,19 +116,19 @@ export default function ShopOwnerDashboard() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F5F1EB]">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
+      <header className="bg-[#F8F5F0] border-b border-[#C1B6A3] px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Studio Management</h1>
-            <p className="text-gray-600">Chào mừng trở lại, Bella Studio</p>
+            <h1 className="text-2xl font-bold text-[#6F5D4F]">Studio Management</h1>
+            <p className="text-[#6F5D4F]/70">Chào mừng trở lại, Bella Studio</p>
           </div>
           <div className="flex items-center gap-4">
             <NotificationButton />
-            <Avatar className="ring-2 ring-blue-100 hover:ring-blue-200 transition-all duration-200">
+            <Avatar className="ring-2 ring-[#C1B6A3] hover:ring-[#B3907A] transition-all duration-200">
               <AvatarImage src="/placeholder.svg" />
-              <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold">
+              <AvatarFallback className="bg-gradient-to-r from-[#B3907A] to-[#6F5D4F] text-white font-semibold">
                 BS
               </AvatarFallback>
             </Avatar>
@@ -122,7 +138,7 @@ export default function ShopOwnerDashboard() {
 
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r border-gray-200 min-h-screen">
+        <aside className="w-64 bg-[#F8F5F0] border-r border-[#C1B6A3] min-h-screen">
           <nav className="p-4 space-y-2">
             <Button
               variant={selectedTab === "overview" ? "default" : "ghost"}
@@ -213,53 +229,53 @@ export default function ShopOwnerDashboard() {
             <div className="space-y-6">
               {/* Stats Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <Card>
+                <Card className="border border-[#C1B6A3] bg-[#EFE7DA] text-[#6F5D4F] shadow-sm">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Tổng đặt lịch</CardTitle>
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <CardTitle className="text-sm font-medium text-[#6F5D4F]">Tổng đặt lịch</CardTitle>
+                    <Calendar className="h-4 w-4 text-[#B3907A]" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{stats.totalBookings}</div>
-                    <p className="text-xs text-muted-foreground">+12% so với tháng trước</p>
+                    <div className="text-2xl font-bold text-[#6F5D4F]">{stats.totalBookings}</div>
+                    <p className="text-xs text-[#6F5D4F]/70">+12% so với tháng trước</p>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="border border-[#C1B6A3] bg-[#EFE7DA] text-[#6F5D4F] shadow-sm">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Doanh thu tháng</CardTitle>
-                    <DollarSign className="h-4 w-4 text-muted-foreground" />
+                    <CardTitle className="text-sm font-medium text-[#6F5D4F]">Doanh thu tháng</CardTitle>
+                    <DollarSign className="h-4 w-4 text-[#B3907A]" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{stats.monthlyRevenue.toLocaleString("vi-VN")}đ</div>
-                    <p className="text-xs text-muted-foreground">+8% so với tháng trước</p>
+                    <div className="text-2xl font-bold text-[#6F5D4F]">{stats.monthlyRevenue.toLocaleString("vi-VN")}đ</div>
+                    <p className="text-xs text-[#6F5D4F]/70">+8% so với tháng trước</p>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="border border-[#C1B6A3] bg-[#EFE7DA] text-[#6F5D4F] shadow-sm">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Dịch vụ hoạt động</CardTitle>
-                    <Package className="h-4 w-4 text-muted-foreground" />
+                    <CardTitle className="text-sm font-medium text-[#6F5D4F]">Dịch vụ hoạt động</CardTitle>
+                    <Package className="h-4 w-4 text-[#B3907A]" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{stats.activeServices}</div>
-                    <p className="text-xs text-muted-foreground">+2 dịch vụ mới</p>
+                    <div className="text-2xl font-bold text-[#6F5D4F]">{stats.activeServices}</div>
+                    <p className="text-xs text-[#6F5D4F]/70">+2 dịch vụ mới</p>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="border border-[#C1B6A3] bg-[#EFE7DA] text-[#6F5D4F] shadow-sm">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Đánh giá TB</CardTitle>
-                    <Star className="h-4 w-4 text-muted-foreground" />
+                    <CardTitle className="text-sm font-medium text-[#6F5D4F]">Đánh giá TB</CardTitle>
+                    <Star className="h-4 w-4 text-[#B3907A]" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{stats.customerSatisfaction}/5</div>
-                    <p className="text-xs text-muted-foreground">Từ 89 đánh giá</p>
+                    <div className="text-2xl font-bold text-[#6F5D4F]">{stats.customerSatisfaction}/5</div>
+                    <p className="text-xs text-[#6F5D4F]/70">Từ 89 đánh giá</p>
                   </CardContent>
                 </Card>
               </div>
 
               {/* Recent Bookings */}
-              <Card>
+              <Card className="border border-[#C1B6A3] bg-[#EFE7DA] text-[#6F5D4F] shadow-sm">
                 <CardHeader>
-                  <CardTitle>Đặt lịch gần đây</CardTitle>
-                  <CardDescription>Danh sách các đặt lịch mới nhất</CardDescription>
+                  <CardTitle className="text-[#6F5D4F]">Đặt lịch gần đây</CardTitle>
+                  <CardDescription className="text-[#6F5D4F]/70">Danh sách các đặt lịch mới nhất</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table>
