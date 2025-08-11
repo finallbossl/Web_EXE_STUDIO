@@ -175,10 +175,10 @@ export default function HomePage() {
                       ))}
                     </div>
                     <div className="flex items-center justify-between">
-                      <div className="text-lg font-bold text-[#B3907A]">{service.price}đ</div>
+                      <div className="text-lg font-bold text-[#544338]">{service.price}đ</div>
                       <Button
                         size="sm"
-                        className="bg-[#6F5D4F] text-white hover:bg-[#5d4c40] hover:text-white"
+                        className="bg-[#6F5D4F] !text-white hover:bg-[#5d4c40] hover:!text-white"
                         asChild
                       >
                         <Link href={`/${service.type}/${service.id}`}>Xem chi tiết</Link>

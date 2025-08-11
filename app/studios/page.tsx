@@ -62,7 +62,7 @@ const studios = [
     name: "Studio Mộng Mơ",
     rating: 4.6,
     reviews: 89,
-    location: "Quận 5, TP.HCM",
+    location: "Xuân Diệu ,Quy Nhơn",
     price: "1,500,000",
     image: "/sinhnhat.jpg",
     verified: true,
@@ -73,7 +73,7 @@ const studios = [
     name: "Studio Thiên Nhiên",
     rating: 4.8,
     reviews: 134,
-    location: "Quận 2, TP.HCM",
+    location: "Ngô Mây,Quy Nhơn",
     price: "2,200,000",
     image: "/tao-dang-chup-anh-voi-hoa-co-phu-kien-9.webp",
     verified: true,
@@ -84,7 +84,7 @@ const studios = [
     name: "Studio Chuyên Nghiệp",
     rating: 4.9,
     reviews: 201,
-    location: "Quận 10, TP.HCM",
+    location: "Nguyễn Thái Học,  Quy Nhơn",
     price: "3,000,000",
     image: "/bi-quyet-chup-anh-01-01-01-01-01-01-01-1280x720.jpg",
     verified: true,
@@ -129,12 +129,8 @@ export default function StudiosPage() {
                     <SelectValue placeholder="Chọn quận" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="quan1">Quận 1</SelectItem>
-                    <SelectItem value="quan2">Quận 2</SelectItem>
-                    <SelectItem value="quan3">Quận 3</SelectItem>
-                    <SelectItem value="quan5">Quận 5</SelectItem>
-                    <SelectItem value="quan7">Quận 7</SelectItem>
-                    <SelectItem value="quan10">Quận 10</SelectItem>
+                    <SelectItem value="quan1">Quy Nhon</SelectItem>
+                    
                   </SelectContent>
                 </Select>
                 <Select>
@@ -185,7 +181,7 @@ export default function StudiosPage() {
                   <SelectItem value="3">3+ sao</SelectItem>
                 </SelectContent>
               </Select>
-              <Badge variant="outline" className="cursor-pointer hover:bg-[#EFE7DA]">
+              <Badge variant="outline" className="cursor-pointer hover:bg-[#e4d8c5]">
                 Đã xác minh
               </Badge>
               <Badge variant="outline" className="cursor-pointer hover:bg-[#EFE7DA]">
@@ -230,7 +226,7 @@ export default function StudiosPage() {
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
                     />
                     {studio.verified && (
-                      <Badge className="absolute top-2 left-2 bg-green-500 text-white">
+                      <Badge className="absolute top-2 left-2 bg-[#357821] !text-white">
                         <Shield className="w-3 h-3 mr-1" />
                         Đã xác minh
                       </Badge>
@@ -276,12 +272,12 @@ export default function StudiosPage() {
                       ))}
                     </div>
                     <div className="flex items-center justify-between">
-                      <div className="text-lg font-bold text-[#B3907A]">
+                      <div className="text-lg font-bold text-[#5f5148]">
                         Từ {studio.price}đ
                       </div>
                       <Button
                         size="sm"
-                        className="bg-[#6F5D4F] text-white hover:bg-[#5d4c40]"
+                        className="bg-[#6F5D4F] !text-white hover:bg-[#5d4c40]"
                         asChild
                       >
                         <Link href={`/studios/${studio.id}`}>Xem chi tiết</Link>

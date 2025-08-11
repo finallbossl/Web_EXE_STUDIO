@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { Camera, Palette, Shirt, ChevronDown, Bell, User, Settings, LogOut, Heart, Calendar } from "lucide-react"
+import { Camera, Palette, Shirt, ChevronDown, Bell, User, Settings, LogOut, Heart, Calendar, Menu } from "lucide-react"
 import Image from "next/image"
 import ClientOnly from "@/components/ClientOnly"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export function Header() {
   const { user, logout } = useAuth()
@@ -20,14 +21,6 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            {/* <div className="w-10 h-10 relative flex items-center justify-center overflow-hidden rounded-xl border border-white/20 group-hover:scale-105 transition-transform">
-              <Image
-                src="/0a8d19ed-3e0f-44a7-b2c3-bed316cbafe5-removebg-preview.png"
-                alt="DepStudio Logo"
-                fill
-                className="object-contain scale-[2.8] mt-[2px]"
-              />
-            </div> */}
             <span
               className="text-[40px] md:text-[30px] font-bold gradient-text leading-none group-hover:opacity-90 transition-opacity"
               style={{ fontFamily: "Simplesnails" }}
@@ -36,7 +29,7 @@ export function Header() {
             </span>
           </Link>
 
-          {/* Navigation */}
+          {/* Navigation desktop */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/" className="nav-link">
               Trang chủ
@@ -71,9 +64,31 @@ export function Header() {
             </Link>
           </nav>
 
+          {/* Mobile menu button */}
+          <div className="flex items-center md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-white">
+                  <Menu className="w-6 h-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="bg-[#FFFDD0] text-black">
+
+                <nav className="flex flex-col space-y-4 mt-6">
+                  <Link href="/" className="hover:text-white/80">Trang chủ</Link>
+                  <Link href="/studios" className="hover:text-white/80">Studio chụp ảnh</Link>
+                  <Link href="/makeup" className="hover:text-white/80">Makeup & Trang điểm</Link>
+                  <Link href="/rental" className="hover:text-white/80">Thuê trang phục</Link>
+                  <Link href="/promotions" className="hover:text-white/80">Ưu đãi</Link>
+                  <Link href="/news" className="hover:text-white/80">Tin tức</Link>
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
+
           {/* User Actions */}
           <ClientOnly fallback={
-            <div className="flex items-center space-x-2">
+            <div className="hidden md:flex items-center space-x-2">
               <Button variant="ghost" className="nav-btn" asChild>
                 <Link href="/login">Đăng nhập</Link>
               </Button>
@@ -82,7 +97,7 @@ export function Header() {
               </Button>
             </div>
           }>
-            <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
               {user ? (
                 <>
                   <Button variant="ghost" size="sm" className="icon-btn">
@@ -126,7 +141,7 @@ export function Header() {
                   </DropdownMenu>
                 </>
               ) : (
-                <div className="flex items-center space-x-2">
+                <div className="hidden md:flex items-center space-x-2">
                   <Button variant="ghost" className="nav-btn" asChild>
                     <Link href="/login">Đăng nhập</Link>
                   </Button>
